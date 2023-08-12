@@ -468,13 +468,14 @@
     )
   :trans (behavior ()
     ((-> (method-of-type logo startup) trans))
-    ;; og:preserve-this
-    (if (and (or *debug-segment* PC_PORT)
-              (cpad-pressed? 0 start circle x)
-              (member (level-status *level* 'village1) '(loaded active))
-              )
-        (set-setting! 'bg-a 'abs 1.0 0)
-        )
+
+    ;; (if (and (or *debug-segment* PC_PORT)
+    ;;           (cpad-pressed? 0 start circle x)
+    ;;           (member (level-status *level* 'village1) '(loaded active))
+    ;;           )
+    ;;     ;;(set-setting! 'bg-a 'abs 1.0 0)
+    ;;     (set! *in-mort-menu* #t)
+    ;;     )
     (when (and (= (-> *setting-control* current bg-a) 1.0)
                (and (member (level-status *level* 'village1) '(active loaded))
                     ;; og:preserve-this i think we can forgo the time check here...
@@ -804,17 +805,22 @@
   )
 
 (defstate target-title-wait (target)
+
   :event (behavior ((proc process) (argc int) (message symbol) (block event-message-block))
-    (case message
-      (('play)
-       (go target-title-play)
-       )
-      (('reset)
-       (deactivate (-> self manipy 0))
-       )
-      (else
-        (target-generic-event-handler proc argc message block)
-        )
+    (let ((v1-0 message))
+      (the-as object (cond
+                       ((= v1-0 'play)
+                        (go target-title-play)
+                        )
+                       ((= v1-0 'reset)
+                        (the-as object (deactivate (-> self manipy 0)))
+                        )
+                       (else
+                         ;;(set! *in-mort-menu* #t)
+                         (target-generic-event-handler proc argc message block)
+                         )
+                       )
+              )
       )
     )
   :enter (behavior ()

@@ -62,6 +62,7 @@
   (eco-pill)
   (buzzer)
   (eco-pill-random)
+  (star)
   )
 
 (defun pickup-type->string ((arg0 pickup-type))
