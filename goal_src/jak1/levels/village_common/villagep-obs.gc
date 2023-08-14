@@ -86,6 +86,7 @@
   :post target-no-move-post
   )
 (define-extern *close-to-portal?* symbol)
+(declare-type warp-gate-switch basebutton)
 (defstate idle (warp-gate)
   :virtual #t
   :event (behavior ((proc process) (argc int) (message symbol) (block event-message-block))
