@@ -34,23 +34,7 @@
 
 
 
-(define *close-to-portal?* #f)
 
-(defun check-portal-distance ()
- (cond
-              ((< (vector-vector-distance (-> *target* root trans) (-> (the-as training-part (process-by-ename "block-world-training-part-1") )root trans)) (meters 12))
-                (set! *close-to-portal?* #t)
-               )
-              (else
-              (set! *close-to-portal?* #f)
-                )
-              )
-;; stupid hack
-;; (if (= (vector-vector-distance (-> *target* root trans) (-> (the-as training-part (process-by-ename "block-world-training-part-1") )root trans)) (meters 12))
-;; (reset-actors 'play)
-;; )
-(none)
-)
 
 
   (defun levelidx-inbounds?()
@@ -67,12 +51,12 @@
              (!= (-> (level-get-target-inside *level*)name ) 'mort-title))
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf))
                                       (bucket-id subtitle))
-      (draw-string-xy (string-format "Mort Debug info ~%Level inside: ~D ~%Total Chicks is is ~D~%Current Chicks is is ~D~%saved Chicks is is ~D~%Close to portal? ~A~%"
+      (draw-string-xy (string-format "Mort Debug info ~%Level inside: ~D ~%Total Chicks is is ~D~%Current Chicks is is ~D~%saved Chicks is is ~D~%"
                                      (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))
                                      (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))total-chicks) 
                                      (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))current-chicks) 
                                      (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))saved-chicks) 
-                                      *close-to-portal?*
+                                      
                                      )
                       buf 300 (- 150 (* 8 4)) (font-color flat-yellow) (font-flags shadow kerning))))
     
@@ -220,7 +204,7 @@
       )
      ;; (while mort-level?
       (cam-eye-no-rot)
-      (check-portal-distance)
+
       (save-chicks-func)
       (mort-debug-text)
     ;;  )
