@@ -443,25 +443,11 @@
   )
 
 (define *warp-info* (new 'static 'boxed-array :type string
-                      "block-world-warp"
-                      "factory-cross-start"
-                      "holly-wood-start"
-                      "monument-start"
-                      "cathederal-start"
-                      "pyramid-start"
-                      "ice-canyon-start"
-                      "coins-start"
-                      "villa-cube-start"
-                      "ice-slide-start"
-                      "islands-start"
-                      "glass-towers-start"
-                      "chemical-factory-start"
-                      "space-bridge-start"
-                      "chicks-start"
-                      "garden-start"
-                      "cold-pipe-start"
-                      "block-man-start"
-                      "cube-face-start"
+                      "training-warp"
+                      "village1-warp"
+                      "village2-warp"
+                      "village3-warp"
+                      "citadel-warp"
                       )
         )
 
