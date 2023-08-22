@@ -8,7 +8,6 @@
 
 ;; DECOMP BEGINS
 
-
 (deftype warpgate (process-hidden)
   ()
   :method-count-assert 15

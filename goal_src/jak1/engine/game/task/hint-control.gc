@@ -230,17 +230,15 @@
 
 (defun find-hint-control-index ((arg0 text-id))
   (let ((gp-0 -1))
-    ;; (let ((v1-2 (length (-> *game-info* hint-control))))
-    ;;   (dotimes (a0-2 v1-2)
-    ;;     (when (= (-> *game-info* hint-control a0-2 id) arg0)
-    ;;       (set! gp-0 a0-2)
-    ;;       (set! a0-2 v1-2)
-    ;;       )
-    ;;     )
-    ;;   )
-    ;; gp-0
-    ;;(text-id citadel-generator-no-mushroom) ;;hack
-    -1
+    (let ((v1-2 (length (-> *game-info* hint-control))))
+      (dotimes (a0-2 v1-2)
+        (when (= (-> *game-info* hint-control a0-2 id) arg0)
+          (set! gp-0 a0-2)
+          (set! a0-2 v1-2)
+          )
+        )
+      )
+    gp-0
     )
   )
 
@@ -259,12 +257,12 @@
   )
 
 (defun increment-success-for-hint ((arg0 text-id))
-  ;; (let ((gp-0 (find-hint-control-index arg0)))
-  ;;   (when (>= gp-0 0)
-  ;;     (seekl! (-> *game-info* hint-control gp-0 num-success) 127 1)
-  ;;     0
-  ;;     )
-  ;;   )
+  (let ((gp-0 (find-hint-control-index arg0)))
+    (when (>= gp-0 0)
+      (seekl! (-> *game-info* hint-control gp-0 num-success) 127 1)
+      0
+      )
+    )
   0
   (none)
   )
@@ -347,24 +345,23 @@
   ;;       )
   ;;     (else
         #f
-  ;;     )
-      )
-    ;;)
-  ;;)
+    ;;     )
+    ;;   )
+    ;; )
+  )
 
 (defun reset-all-hint-controls ()
-  ;;(let ((v1-2 (length (-> *game-info* hint-control))))
-  (let ((v1-2 25)) ;;hack
-    (dotimes (a0-1 v1-2)
-      (let ((a1-2 (-> *game-info* hint-control a0-1)))
-        (set! (-> a1-2 start-time) 0)
-        (set! (-> a1-2 last-time-called) 0)
-        (set! (-> a1-2 num-attempts) 0)
-        (set! (-> a1-2 num-success) 0)
-        )
-      0
-      )
-    )
+  ;; (let ((v1-2 (length (-> *game-info* hint-control))))
+  ;;   (dotimes (a0-1 v1-2)
+  ;;     (let ((a1-2 (-> *game-info* hint-control a0-1)))
+  ;;       (set! (-> a1-2 start-time) 0)
+  ;;       (set! (-> a1-2 last-time-called) 0)
+  ;;       (set! (-> a1-2 num-attempts) 0)
+  ;;       (set! (-> a1-2 num-success) 0)
+  ;;       )
+  ;;     0
+  ;;     )
+  ;;   )
   0
   (none)
   )
