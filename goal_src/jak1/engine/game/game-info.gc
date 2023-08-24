@@ -14,8 +14,9 @@
 (define-extern runs-on-jak-death (function symbol none))
 ;;Forward declaration Variable for mod base settings
 (define-extern startingDebugContinuePoint (string))
-;; DECOMP BEGINS
+(defun-extern orange-demon-manager-start symbol none)
 
+;; DECOMP BEGINS
 
 ;;;;;;;;;;;;;;;;;;
 ;; border plane
@@ -323,6 +324,11 @@
                                              )
                                            (suspend)
                                            (start arg0 arg2)
+                                            (when arg3
+                                            (if (task-complete? *game-info* (game-task training-gimmie))
+                                              (orange-demon-manager-start #t)
+                                              )
+                                             )
                                            (none)
                                            )
                               (-> this mode) cause (get-or-create-continue! this) save-to-load

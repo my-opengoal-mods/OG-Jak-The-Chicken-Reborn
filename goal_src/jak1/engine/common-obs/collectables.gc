@@ -39,6 +39,14 @@
   )
 
 ;; DECOMP BEGINS
+<<<<<<< HEAD
+=======
+(defun-extern orange-demon-manager-start symbol none)
+(import "goal_src/jak1/import/buzzer-ag.gc")
+(import "goal_src/jak1/import/ecovalve-ag.gc")
+(import "goal_src/jak1/import/money-ag.gc")
+(import "goal_src/jak1/import/fuel-cell-ag.gc")
+>>>>>>> 33d2ab1df (Orange demon)
 
 (define *eco-pill-count* 0)
 
