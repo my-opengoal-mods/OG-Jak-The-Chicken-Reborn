@@ -69,6 +69,7 @@
     (ja-channel-set! 1)
     (send-event self 'do-effect 'death-warp-in -1.0)
     (sound-play "warpgate-tele")
+       (reset-actors #t)
     (ja-no-eval :group! eichar-duck-high-jump-ja :num! (seek! (ja-aframe 50.0 0)) :frame-num (ja-aframe 40.0 0))
     (until (ja-done? 0)
       (suspend)
@@ -98,8 +99,12 @@
   :code (behavior ()
     ;; (remove-setting! 'allow-progress)
     (set-time! (-> self state-time))
+              (if (the warp-gate (-> (the warp-gate-switch (process-by-ename "block-world-warp-gate-switch") )child 0))
+        (vector-copy! (-> self root trans) (-> (the warp-gate (-> (the warp-gate-switch (process-by-ename "block-world-warp-gate-switch") )child 0)) root trans))
+        )
     (loop
-     (when (or (and (and *target*  (>= 20480.0 (vector-vector-distance (-> self root trans) (-> *target* control trans))))
+
+     (when  (and (and *target*  (>= 20480.0 (vector-vector-distance (-> self root trans) (-> *target* control trans))))
                  (and (>= (-> self level-slot) 0)
                       (not (movie?))
                       (not (level-hint-displayed?))
@@ -114,9 +119,7 @@
                         (or (!= (-> self level-slot) 3) (and (< f0-1 -9102.223) (< -32768.0 f0-1)))
                         )
                       )
-                 )
-                 (and *close-to-portal?* (=  (-> (the warp-gate (-> (the warp-gate-switch (process-by-ename "block-world-warp-gate-switch") )child 0)) state name)'idle))
-                 )
+                 )       
         (hide-hud)
         (level-hint-surpress!)
         (kill-current-level-hint '() '(sidekick voicebox) 'exit)
@@ -125,13 +128,13 @@
                    (cond
                      ((or (= (-> *target* next-state name) 'target-warp-in) (= (-> *target* next-state name) 'target-warp-out))
                       (set-time! (-> self state-time))
-                      #f
+                      #t
                       )
                      (else
                        #t
                        )
                      )
-                   (time-elapsed? (-> self state-time) (seconds 0.1))
+                  ;;  (time-elapsed? (-> self state-time) (seconds 0.1))
                    )
           (if (and (cpad-pressed? 0 circle) (process-grab? *target*))
               (go-virtual active)
