@@ -229,17 +229,18 @@
       )
 
 (defun find-hint-control-index ((arg0 text-id))
-  (let ((gp-0 -1))
-    (let ((v1-2 (length (-> *game-info* hint-control))))
-      (dotimes (a0-2 v1-2)
-        (when (= (-> *game-info* hint-control a0-2 id) arg0)
-          (set! gp-0 a0-2)
-          (set! a0-2 v1-2)
-          )
-        )
-      )
-    gp-0
-    )
+  ;; (let ((gp-0 -1))
+  ;;   (let ((v1-2 (length (-> *game-info* hint-control))))
+  ;;     (dotimes (a0-2 v1-2)
+  ;;       (when (= (-> *game-info* hint-control a0-2 id) arg0)
+  ;;         (set! gp-0 a0-2)
+  ;;         (set! a0-2 v1-2)
+  ;;         )
+  ;;       )
+  ;;     )
+  ;;   gp-0
+  ;;   )
+  0
   )
 
 (defun start-hint-timer ((arg0 text-id))
