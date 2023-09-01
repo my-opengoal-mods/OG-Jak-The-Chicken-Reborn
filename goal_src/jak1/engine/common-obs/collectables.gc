@@ -428,6 +428,7 @@
         (-> self jump-pos)
         (the-as float 300.0)
         (the-as float -2.2755556)
+        1.0
         )
       (set-time! (-> self state-time))
       (until (time-elapsed? (-> self state-time) (seconds 1))
