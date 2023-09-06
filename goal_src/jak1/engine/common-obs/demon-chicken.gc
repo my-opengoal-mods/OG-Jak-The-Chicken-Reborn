@@ -314,7 +314,7 @@
 
 (defun draw-beta-flock-points ()
 ;;beta function to draw spheres assiend my set-flock-points
-(when *show-debug*
+(when (and *show-debug* *debug-segment*)
   (dotimes (i NUM_FLOCKPOINTS)
     ;;draw a black circle where a chick is trying to get to.
     (add-debug-sphere #t (bucket-id debug-no-zbuf) (-> (get-chick-from-flock i) target-pos) (meters 0.10) *color-black*)
@@ -554,7 +554,7 @@
   )
 
 (defun draw-origin ()
-(when *show-debug*
+(when (and *show-debug* *debug-segment*)
   (add-debug-sphere #t (bucket-id debug-no-zbuf) *Origin* (meters 0.1) *color-orange*)
   (add-debug-text-3d #t (bucket-id debug-no-zbuf) (string-format "Origin point") *Origin* (font-color red) (the-as vector2h #f))
 )
@@ -611,7 +611,10 @@
 (dotimes (i (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))current-chicks))
 ;;(format #t "~D" i)
 (set! (->  (get-chick-from-flock i) target-pos quad)(-> *flock-points* points i quad))
+(when *debug-segment*
 (add-debug-text-3d #t (bucket-id debug-no-zbuf) (string-format "~D" i) (->  (get-chick-from-flock i) target-pos )(font-color green) (the-as vector2h #f))
+)
+
  )
 )
 
@@ -642,7 +645,7 @@
 (defbehavior demon-chicken-chase-post demon-chicken ()
   "Chase post: Poll [[target]]'s position and update our own position, direction and trajectory time."
   ;;(set! (-> self target-pos quad) (-> (target-pos 0) quad))
-  (when *show-debug*
+  (when (and *show-debug* *debug-segment*)
     (add-debug-sphere #t (bucket-id debug-no-zbuf) (-> self target-pos) (meters 0.05) *color-red*)
  ;; (add-debug-text-3d #t (bucket-id debug-no-zbuf) (string-format "~S" (-> self name))  (-> self target-pos) (font-color red) (the-as vector2h #f))
   )

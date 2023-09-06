@@ -237,7 +237,7 @@
                         (set! *in-mort-menu* #f)
                         ;; replace with mort menu eventually
                         (sound-play "select-menu")
-                        (send-event *target* 'continue (get-continue-by-name *game-info* "block-world-start"))
+                        (send-event *target* 'continue (get-continue-by-name *game-info* "block-world-warp"))
                         (return 0)
                         )
                         )

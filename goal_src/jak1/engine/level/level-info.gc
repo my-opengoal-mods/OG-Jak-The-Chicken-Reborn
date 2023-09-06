@@ -2828,7 +2828,7 @@
                            :continues '((new 'static 'continue-point
                                              :name "mort-title-start"
                                              :level 'mort-title
-                                             :flags (continue-flags warp)
+                                            ;; :flags (continue-flags warp)
                                              :trans (new 'static 'vector :x -0.00 :y  2.00 :z -0.62 :w 1.0)
                                              :quat (new 'static 'quaternion  :w 1.0)
                                              :camera-trans (new 'static 'vector :x 0.7389 :y 5.4833 :z 9.3438 :w 1.0)
@@ -2838,7 +2838,7 @@
                                              :lev0 'mort-title
                                              :disp0 'display
                                              :lev1 'village1
-                                             :disp1 '#f
+                                             :disp1 #f
                                              ))
                            :tasks '()
                            :priority 100

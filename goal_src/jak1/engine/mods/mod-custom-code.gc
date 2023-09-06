@@ -260,8 +260,17 @@
 (defun warp-demon-chick ()
   (dotimes (i NUM_FLOCKPOINTS) 
 ;;If they are close to the portal
-    (when (< (vector-vector-distance  (-> (the-as training-part (process-by-ename "block-world-training-part-1") )root trans) 
-                                    (-> (get-chick-from-flock i) root trans)) (meters 0.1))
+
+  ;;This is probably a hack
+  (if (and (= (-> *flock-points* points 1 x) 0.0) )
+        (init-chickens)
+      )
+
+    (when (and 
+               (process-by-ename "block-world-training-part-1") 
+               (get-chick-from-flock i)
+               (< (vector-vector-distance  (-> (the-as training-part (process-by-ename "block-world-training-part-1"))root trans)
+                                    (-> (get-chick-from-flock i) root trans)) (meters 0.1)))
                                     ;;Play portal effect on them
                                     (effect-control-method-10  (-> (get-chick-from-flock i) skel effect) 'death-warp-in -1.0 -1 )
                                     ;;set their target to 1,1,1
@@ -312,7 +321,7 @@
       )
 
   (when (and (process-by-ename "robotboss-3") *target*)
-(robo-movie-check))
+    (robo-movie-check))
     (update-mort-vars)
     (when (run-mort-code?)
       (adjust-chick-origin (find-best-master-mark))
@@ -328,7 +337,7 @@
       (assign-remove-demon-chicken-target)
 
     ;;Constantly check all chicks to see if they are in the warpgate if they are, then run chick-saved and increment saved per level
-      (warp-demon-chick)
+     (warp-demon-chick)
       (save-chicks-func)
       (draw-beta-flock-points)
       (mort-debug-text)
@@ -339,7 +348,7 @@
         (input-display-off)
         )
     
-   )
+    )
       ;;This should be done as the last thing
       (find-best-master-mark)
       (mort-main-menu)
