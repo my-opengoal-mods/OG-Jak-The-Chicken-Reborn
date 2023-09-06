@@ -55,7 +55,7 @@ else:
                 #"movie-pos": [pos.x, pos.z, -1 * pos.y],
             }
         }
-
+        obj.name = f"{blend_file_name}-chick-{count}"
         # Increment the counter
         count += 1
 
@@ -108,7 +108,7 @@ else:
                 #"movie-pos": [pos.x, pos.z, -1 * pos.y],
             }
         }
-
+        obj.name = f"{blend_file_name}-{etype}-{count}"
         # Increment the counter
         count += 1
 
@@ -161,7 +161,7 @@ else:
                 "name": f"{blend_file_name}-{etype}-{count}",
             }
         }
-
+        f"{blend_file_name}-{etype}-{count}"
         # Increment the counter
         count += 1
 
@@ -213,7 +213,7 @@ else:
                 "name": f"{blend_file_name}-{etype}-{count}",
             }
         }
-
+        f"{blend_file_name}-{etype}-{count}"
         # Increment the counter
         count += 1
 
