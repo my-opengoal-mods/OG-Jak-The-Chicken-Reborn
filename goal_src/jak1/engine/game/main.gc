@@ -179,7 +179,7 @@
 
 (defun toggle-pause ()
   "Do pause/menu/progress transitions"
-
+ 
 
 
   (case *master-mode*
