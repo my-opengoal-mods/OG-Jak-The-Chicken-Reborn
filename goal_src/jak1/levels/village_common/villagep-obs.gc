@@ -8,6 +8,7 @@
 
 ;; DECOMP BEGINS
 
+(defun-extern runs-on-warp-confirm (none))
 (deftype warpgate (process-hidden)
   ()
   :method-count-assert 15
@@ -344,6 +345,8 @@
           (let ((s1-2 (get-continue-by-name *game-info* (-> *warp-info* gp-0))))
             (lookup-level-info (-> s1-2 level))
             (when (and (time-elapsed? (-> self state-time) (seconds 0.05)) (cpad-pressed? 0 circle))
+                (runs-on-warp-confirm)
+                (suspend)
               (logclear! (-> *cpad-list* cpads 0 button0-abs 0) (pad-buttons circle))
               (logclear! (-> *cpad-list* cpads 0 button0-rel 0) (pad-buttons circle))
               (go-virtual use gp-0 (the-as level s1-2))

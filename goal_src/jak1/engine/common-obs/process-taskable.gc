@@ -1218,7 +1218,7 @@
         (when (or (-> self die?) (and (not (-> self survive-anim-end?)) (ja-anim-done? a0-25)))
           (let ((gp-1 (current-time)))
             (while (and (not (time-elapsed? gp-1 (seconds 60)))
-                        (or (and (-> self entity) (not (is-object-visible? (-> self entity extra level) (-> self entity extra vis-id))))
+                        (or (and (-> self entity) (not (is-object-visible? (-> self entity extra level) (-> self entity extra vis-id)(-> self entity))))
                             (< 81920.0 (vector-vector-distance (camera-pos) (-> *math-camera* trans)))
                             )
                         )
