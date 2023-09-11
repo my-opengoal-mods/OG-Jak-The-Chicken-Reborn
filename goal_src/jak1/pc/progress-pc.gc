@@ -1934,15 +1934,13 @@
               )
              ;; continue without saving
              ((and (= (-> obj display-state) (progress-screen save-game-title)) (= (-> obj option-index) 4))
-              (sound-play "starts-options")
-              (sound-volume-off)
-              (set! (-> *game-info* mode) 'play)
-              (if (= (-> *pc-settings* speedrunner-mode?) #t)
-                  ;; Start a new game differently if speedrunning mode is active
-                  (speedrun-start-full-game-run)
-                  ;; start the game normally
-                  (initialize! *game-info* 'game (the-as game-save #f) "intro-start"))
-              (set-master-mode 'game))
+             (none)
+              ;; (sound-play "starts-options")
+              ;; (sound-volume-off)
+              ;; (set! (-> *game-info* mode) 'play)
+              ;; (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
+              ;; (set-master-mode 'game)
+              )
              (else
                (sound-play "cursor-options")
                (set! (-> obj next-display-state) (progress-screen invalid))
@@ -2064,7 +2062,7 @@
           (((progress-screen quit))
            (cond
              ((-> *progress-state* yes-no-choice)
-              (set! *quit-to-title* #t)
+              ;;(set! *quit-to-title* #t)
               (sound-play "start-options")
               (sound-volume-off)
               (set! (-> *game-info* mode) 'play)
@@ -2918,6 +2916,7 @@
 (set! (-> progress-going-out enter)
   (lambda :behavior progress ()
     (sound-play "menu-close")
+   ;; (pause-play-main-music)
     (hide-progress-icons)
     (remove-setting! 'music)
     (apply-settings *setting-control*)

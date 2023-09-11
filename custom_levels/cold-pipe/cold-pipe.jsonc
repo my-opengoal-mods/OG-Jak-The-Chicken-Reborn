@@ -1,0 +1,103 @@
+{
+  // The "in-game" name of the level. Should be lower case, with dashes (GOAL symbol name)
+  // the name of this file, and the folder this file is in must have the same name.
+  "long_name": "cold-pipe",
+  // The file name, should be upper case and 8 characters or less.
+  "iso_name": "COLDPIPE",
+  // The nickname, should be exactly 3 characters
+  "nickname": "COL", // 3 char name, all uppercase
+
+  // Background mesh file.
+  // Must have vertex colors. Use the blender cycles renderer, bake, diffuse, uncheck color,
+  // and bake to vertex colors. For now, only the first vertex color group is used, so make sure you
+  // only have 1.
+  "gltf_file": "custom_levels/cold-pipe/test-zone2.glb",
+  "automatic_wall_detection": true,
+  "automatic_wall_angle": 45.0,
+  "base_id": 10000003321,
+  // if your mesh has triangles with incorrect orientation, set this to make all collision mesh triangles double sided
+  // this makes collision 2x slower and bigger, so only use if really needed
+  "double_sided_collide": false,"ambients": [],
+
+
+  "actors" : [
+    {
+      "trans": [ 31.73, 303.37, 153.08], 
+      "etype": "warpgate",
+      "game_task": 0,
+      "quat" : [-0.1204, -0.1174, 0.6881, 0.7057],
+      "bsphere": [1193.75, 48.39, -3630.47, 10],
+      "lump": {
+        "name": "project-warpgate"
+      }
+    },
+	
+	{
+      "trans": [58.32, 300.00, 153.99], 
+      "etype": "warp-gate-switch",
+      "game_task": 117,
+      "quat" : [0, 0, 0, 1],
+      "bsphere": [1189.09, 48.11, -3619.92, 10],
+      "lump": {
+        "name": "project-warp-gate-switch",
+		"alt-actor": "project-training-part-1"
+      }
+    },
+	
+	{
+      "trans": [ 31.73, 303.37, 153.08], 
+      "etype": "training-part",
+      "game_task": 0,
+      "quat" : [-0.1204, -0.1174, 0.6881, 0.7057],
+      "bsphere": [1193.75, 51.39, -3630.47, 10],
+      "lump": {
+        "name": "project-training-part-1",
+		"effect-name": "'warpgate-loop",
+        "art-name":"group-training-warpgate",
+        "effect-param": ["float", 3.0000, 80.0000, 12.0000, 40.0000],
+        "cycle-speed": ["float", -1.0000, 0.0000],
+        "rot": ["float", -1.0000, -1.0000,-1.0]
+      }
+    },
+    {"trans": [-80.38906860351562, 322.31005859375, 227.56239318847656], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.001", "eco-info": ["int32", 6, 2]}},
+     {"trans": [-50.42530822753906, 315.64459228515625, 215.58535766601562], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.002", "eco-info": ["int32", 6, 2]}}, 
+     {"trans": [-10.841796875, 297.6604919433594, 178.8570556640625], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.003", "eco-info": ["int32", 6, 2]}}, 
+     {"trans": [-39.835792541503906, 297.0624694824219, 237.24383544921875], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.004", "eco-info": ["int32", 6, 2]}},
+      {"trans": [56.21331787109375, 304.54638671875, 228.90626525878906], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.005", "eco-info": ["int32", 6, 2]}}, 
+      {"trans": [28.330669403076172, 302.21246337890625, 184.52166748046875], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.006", "eco-info": ["int32", 6, 2]}},
+    {
+      "trans": [-21.6238, 20.0496, 17.1191], // translation
+      "etype": "fuel-cell",  // actor type
+      "game_task": 0, // associated game task (for powercells, etc)
+      "quat" : [0, 0, 0, 1], // quaternion
+      "bsphere": [-21.6238, 19.3496, 17.1191, 10], // bounding sphere
+      "lump": {
+        "name":"test-fuel-cell"
+      }
+    },
+
+    {
+      "trans": [-15.2818, 15.2461, 17.1360], // translation
+      "etype": "crate",  // actor type
+      "game_task": 0, // associated game task (for powercells, etc)
+      "quat" : [0, 0, 0, 1], // quaternion
+      "bsphere": [-15.2818, 15.2461, 17.1360, 10], // bounding sphere
+      "lump": {
+        "name":"test-crate",
+        "crate-type":"'steel",
+        "eco-info": ["int32", 5, 10]
+      }
+    },
+
+    {
+      "trans": [-5.4630, 17.4553, 1.6169], // translation
+      "etype": "eco-yellow",  // actor type
+      "game_task": 0, // associated game task (for powercells, etc)
+      "quat" : [0, 0, 0, 1], // quaternion
+      "bsphere": [-5.4630, 17.4553, 1.6169, 10], // bounding sphere
+      "lump": {
+        "name":"test-eco"
+      }
+    }
+  ]
+}

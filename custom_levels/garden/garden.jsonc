@@ -1,0 +1,78 @@
+{
+  // The "in-game" name of the level. Should be lower case, with dashes (GOAL symbol name)
+  // the name of this file, and the folder this file is in must have the same name.
+  "long_name": "garden",
+  // The file name, should be upper case and 8 characters or less.
+  "iso_name": "GARDEN",
+  // The nickname, should be exactly 3 characters
+  "nickname": "GAR", // 3 char name, all uppercase
+
+  // Background mesh file.
+  // Must have vertex colors. Use the blender cycles renderer, bake, diffuse, uncheck color,
+  // and bake to vertex colors. For now, only the first vertex color group is used, so make sure you
+  // only have 1.
+  "gltf_file": "custom_levels/garden/test-zone2.glb",
+  "automatic_wall_detection": true,
+  "automatic_wall_angle": 45.0,
+  "base_id": 15450321,
+  // if your mesh has triangles with incorrect orientation, set this to make all collision mesh triangles double sided
+  // this makes collision 2x slower and bigger, so only use if really needed
+  "double_sided_collide": false,"ambients": [],
+
+
+  "actors" : [
+    {
+      "trans": [ 31.73, 303.37, 153.08], 
+      "etype": "warpgate",
+      "game_task": 0,
+      "quat" : [-0.1204, -0.1174, 0.6881, 0.7057],
+      "bsphere": [1193.75, 48.39, -3630.47, 10],
+      "lump": {
+        "name": "project-warpgate"
+      }
+    },
+	
+	{
+      "trans": [58.32, 300.00, 153.99], 
+      "etype": "warp-gate-switch",
+      "game_task": 117,
+      "quat" : [0, 0, 0, 1],
+      "bsphere": [1189.09, 48.11, -3619.92, 10],
+      "lump": {
+        "name": "project-warp-gate-switch",
+		"alt-actor": "project-training-part-1"
+      }
+    },
+	
+	{
+      "trans": [ 31.73, 303.37, 153.08], 
+      "etype": "training-part",
+      "game_task": 0,
+      "quat" : [-0.1204, -0.1174, 0.6881, 0.7057],
+      "bsphere": [1193.75, 51.39, -3630.47, 10],
+      "lump": {
+        "name": "project-training-part-1",
+		"effect-name": "'warpgate-loop",
+        "art-name":"group-training-warpgate",
+        "effect-param": ["float", 3.0000, 80.0000, 12.0000, 40.0000],
+        "cycle-speed": ["float", -1.0000, 0.0000],
+        "rot": ["float", -1.0000, -1.0000,-1.0]
+      }
+    },
+{"trans": [19.063562393188477, 299.68780517578125, 133.86180114746094], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.001", "eco-info": ["int32", 6, 2]}}, {"trans": [-13.691094398498535, 296.8736572265625, 81.38124084472656], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.002", "eco-info": ["int32", 6, 2]}}, {"trans": [68.93881225585938, 308.948486328125, 59.84001159667969], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.003", "eco-info": ["int32", 6, 2]}}, {"trans": [-2.9512827396392822, 316.7720947265625, 59.84001159667969], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.004", "eco-info": ["int32", 6, 2]}}, {"trans": [-12.928779602050781, 323.87872314453125, 24.378345489501953], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.005", "eco-info": ["int32", 6, 2]}}, {"trans": [-50.53687286376953, 323.878662109375, 46.49302673339844], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.006", "eco-info": ["int32", 6, 2]}}, {"trans": [-41.161865234375, 323.878662109375, 108.46827697753906], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.007", "eco-info": ["int32", 6, 2]}}, {"trans": [-59.66926574707031, 323.878662109375, 191.8185577392578], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.008", "eco-info": ["int32", 6, 2]}}, {"trans": [-18.221954345703125, 339.4212951660156, 150.10462951660156], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.009", "eco-info": ["int32", 6, 2]}}, {"trans": [-20.731212615966797, 303.2818603515625, 160.86949157714844], "etype": "fuel-cell", "game_task": 2, "quat": [0, 0, 0, 1], "bsphere": [0.0, 0.0, 0.0, 0.0], "lump": {"name": "chick.010", "eco-info": ["int32", 6, 2]}}
+   
+
+    ,
+
+    {
+      "trans": [-5.4630, 17.4553, 1.6169], // translation
+      "etype": "eco-yellow",  // actor type
+      "game_task": 0, // associated game task (for powercells, etc)
+      "quat" : [0, 0, 0, 1], // quaternion
+      "bsphere": [-5.4630, 17.4553, 1.6169, 10], // bounding sphere
+      "lump": {
+        "name":"test-eco"
+      }
+    }
+  ]
+}

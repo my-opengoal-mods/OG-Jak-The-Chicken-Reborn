@@ -1676,6 +1676,28 @@
   (input-opts-binds-unknown #x1615)
   (progress-no-other-resolution-options #x1616)
   (input-opts-controller-led-reflect-heat #x1617)
+  
+  (blockworld-buzzer-task-name      #x2501)
+  (blockworld-level-name            #x20c4)
+  (factory-cross-level-name            #x2502)
+  (holly-world-level-name            #x2503)
+  (monument-level-name            #x2504)
+  (cathederal-level-name            #x2505)
+  (pyramid-level-name            #x2506)
+  (ice-canyon-level-name            #x2507)
+  (coins-level-name            #x2508)
+  (villa-cube-level-name            #x2509)
+  (ice-slide-level-name            #x2510)
+  (islands-level-name            #x2511)
+  (glass-towers-level-name            #x2512)
+  (chemical-factory-level-name            #x2513)
+  (space-bridge-level-name            #x2514)
+  (chicks-level-name            #x2515)
+  (garden-level-name            #x2516)
+  (cold-pipe-level-name            #x2517)
+  (block-man-level-name            #x2518)
+  (cube-face-level-name            #x2519)
+
 ;; GAME-TEXT-ID ENUM ENDS
   )
 
@@ -5627,9 +5649,10 @@
    (prev-level        basic     :offset-assert 104)
    (next-level        basic     :offset-assert 108)
    (wait-for-load     symbol    :offset-assert 112)
+
    )
   :method-count-assert 9
-  :size-assert         #x74
+    :size-assert         #x74
   :flag-assert         #x900000074
   )
 
@@ -9877,6 +9900,7 @@
     )
   )
 
+  
 ;; - Symbols
 
 (define-extern *GAME-bank* game-bank)
@@ -22350,6 +22374,7 @@
 (define-extern *language-name-remap* (array text-id))
 (define-extern *task-egg-starting-x* (array int32))
 (define-extern *game-counts* game-count-info)
+
 (define-extern *level-task-data-remap* (array int32))
 (define-extern *level-task-data* (array level-tasks-info))
 

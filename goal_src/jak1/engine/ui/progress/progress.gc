@@ -679,12 +679,92 @@
   (none)
   )
 
+(define *game-counts* (the game-count-info (malloc 'global 10000)))
 (defmethod relocate game-count-info ((obj game-count-info) (arg0 int))
   "Load in the game-count-info. This is a bit of a hack."
-  (set! *game-counts* obj)
+  ;;(set! *game-counts* obj)
+  
+  (set! (-> *game-counts* type) game-count-info)
+  (set! (-> *game-counts* length) (length *level-load-list*))
+  (set! (-> *game-counts* data 0 money-count) 50)
+(set! (-> *game-counts* data 1 money-count) 50)
+(set! (-> *game-counts* data 2 money-count) 150)
+(set! (-> *game-counts* data 3 money-count) 150)
+(set! (-> *game-counts* data 4 money-count) 150)
+(set! (-> *game-counts* data 5 money-count) 50)
+(set! (-> *game-counts* data 6 money-count) 50)
+(set! (-> *game-counts* data 7 money-count) 200)
+(set! (-> *game-counts* data 8 money-count) 200)
+(set! (-> *game-counts* data 9 money-count) 200)
+(set! (-> *game-counts* data 10 money-count) 50)
+(set! (-> *game-counts* data 11 money-count) 50)
+(set! (-> *game-counts* data 12 money-count) 200)
+(set! (-> *game-counts* data 13 money-count) 200)
+(set! (-> *game-counts* data 14 money-count) 50)
+(set! (-> *game-counts* data 15 money-count) 200)
+(set! (-> *game-counts* data 16 money-count) 55)
+(set! (-> *game-counts* data 17 money-count) 42)
+(set! (-> *game-counts* data 18 money-count) 49)
+(set! (-> *game-counts* data 19 money-count) 45)
+(set! (-> *game-counts* data 20 money-count) 47)
+(set! (-> *game-counts* data 22 money-count) 45)
+(set! (-> *game-counts* data 29 money-count) 55)
+
+
+(set! (-> *game-counts* data 21 money-count) 47)
+
+
+
+;; (define block-world-load-level-id 22)
+;; (define block-world-per-level-id 16)
+;; (define block-world-num-chicks 3)
+;; (define block-world-num-fuel 6)
+;; (define block-world-spawn-point 0)
+
+
+
+  (dotimes (i (level-task-data-index max))
+  (if (or (= (-> *game-counts* data i money-count) 0) (> (-> *game-counts* data i money-count) 300) (= (-> *game-counts* data i money-count) #f))
+  (set! (-> *game-counts* data i money-count) i)
+  )
+  (if (or (= (-> *game-counts* data i buzzer-count) 0) (> (-> *game-counts* data i buzzer-count) 300) (= (-> *game-counts* data i buzzer-count) #f))
+  (set! (-> *game-counts* data i buzzer-count) i)
+  )
+  )
+
+
   obj
   )
 
+
+;; manually set up game-counts
+#|(define *game-counts-custom* (the game-count-info (malloc 'global 10000000)))
+(set! (-> *game-counts-custom* type) game-count-info)
+(set! (-> *game-counts-custom* length) 40)
+(dotimes (i 16)
+;;(set! (-> *game-counts-custom* data i money-count) 12)
+(set! (-> *game-counts-custom* data i buzzer-count) 7)
+)
+(set! (-> *game-counts-custom* data 0 money-count) 50)
+(set! (-> *game-counts-custom* data 1 money-count) 50)
+(set! (-> *game-counts-custom* data 2 money-count) 150)
+(set! (-> *game-counts-custom* data 3 money-count) 150)
+(set! (-> *game-counts-custom* data 4 money-count) 150)
+(set! (-> *game-counts-custom* data 5 money-count) 50)
+(set! (-> *game-counts-custom* data 6 money-count) 50)
+(set! (-> *game-counts-custom* data 7 money-count) 200)
+(set! (-> *game-counts-custom* data 8 money-count) 200)
+(set! (-> *game-counts-custom* data 9 money-count) 200)
+(set! (-> *game-counts-custom* data 10 money-count) 50)
+(set! (-> *game-counts-custom* data 11 money-count) 50)
+(set! (-> *game-counts-custom* data 12 money-count) 200)
+(set! (-> *game-counts-custom* data 13 money-count) 200)
+(set! (-> *game-counts-custom* data 14 money-count) 50)
+(set! (-> *game-counts-custom* data 15 money-count) 200)
+
+|#
+
+  
 (defmethod relocate progress ((obj progress) (arg0 int))
   (dotimes (v1-0 (-> obj nb-of-particles))
     (when (-> obj particles v1-0 part)
@@ -1732,14 +1812,16 @@
                                (let ((gp-1 (-> *setting-control* default auto-save)))
                                  (sound-volume-off)
                                  (set! (-> *game-info* mode) 'play)
-                                 (cond
-                                  ;; Start a new game differently if speedrunning mode is active
-                                  ((= (-> *pc-settings* speedrunner-mode?) #t)
-                                   (speedrun-start-full-game-run))
-                                  ;; start the game normally
-                                  (else
-                                    (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
-                                    (set! (-> *setting-control* default auto-save) gp-1)))
+                                 (set! *in-mort-menu* #t)
+                                ;;  (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
+                                ;;  (cond
+                                ;;   ;; Start a new game differently if speedrunning mode is active
+                                ;;   ((= (-> *pc-settings* speedrunner-mode?) #t)
+                                ;;    (speedrun-start-full-game-run))
+                                ;;  ;; start the game normally
+                                ;;  (else
+                                ;;    (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
+                                ;;    (set! (-> *setting-control* default auto-save) gp-1)))
                                  )
                                (the-as object (set-master-mode 'game))
                                )
@@ -2131,6 +2213,7 @@
     (add-setting! 'process-mask 'set 0.0 (process-mask progress))
     (apply-settings *setting-control*)
     (sound-play "select-menu")
+     ;; (pause-play-main-music)
     (set-blackout-frames 0)
     (set! *pause-lock* #f)
     (none)
