@@ -766,6 +766,7 @@
            (set! (-> obj eco-level) 2.0)
            )
 
+      
 
        ;; sound and controller vibration.
        (when (not (and (= (handle->process source-handle) (handle->process (-> obj eco-source)))

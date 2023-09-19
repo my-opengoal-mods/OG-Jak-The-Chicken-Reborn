@@ -211,7 +211,7 @@
      )
      ;;tageco This determines the look, and sound of the new eco
     (((pickup-type eco-new))
-     (set! (-> obj eco-effect) (-> *part-group-id-table* 42))
+     (set! (-> obj eco-effect) (-> *part-group-id-table* 709))
      (set! (-> obj collect-effect) (-> *part-group-id-table* 66))
      (set! (-> obj collect-effect2) (-> *part-group-id-table* 43))
      (set! (-> obj collect-effect-time) (seconds 0.5))
@@ -3371,7 +3371,7 @@
   (none)
   )
 
-;;tageco vents need to be definied and have a init metho
+;;tageco vents need to be definied and have a init method
 (deftype ventnew (vent)
   ()
   :heap-base #x70
