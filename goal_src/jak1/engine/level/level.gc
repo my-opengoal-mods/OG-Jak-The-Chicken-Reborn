@@ -2030,13 +2030,14 @@
   ;; if we are outside of both levels boxes, then we don't really know what to do
   ;; for vis, and we can display the classic "outside of bsp" error.
   (cond
-    ((not (or (-> this level0 inside-boxes?) (-> this level1 inside-boxes?)))
-     (when (or (-> this level0 vis-info 0) (-> this level1 vis-info 0))
-       (if (= *cheat-mode* 'debug)
-           (format *stdcon* "~3Loutside of bsp~%~0L")
-           )
-       )
-     )
+
+    ;; ((not (or (-> obj level0 inside-boxes?) (-> obj level1 inside-boxes?)))
+    ;;  (when (or (-> obj level0 vis-info 0) (-> obj level1 vis-info 0))
+    ;;    (if (= *cheat-mode* 'debug)
+    ;;        (format *stdcon* "~3Loutside of bsp~%~0L")
+    ;;        )
+    ;;    )
+    ;;  )
     (else
       ;; we are in at least one bsp.
       ;; now we need to link vis info to bsps.
