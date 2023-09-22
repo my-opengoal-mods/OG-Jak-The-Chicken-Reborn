@@ -598,6 +598,12 @@
                 (set! (-> s5-1 0 display-level-index) 0)
                 0
                 )
+
+                ;; MORT HACK TO OPEN PROGRESS AT CUSTOM LEVEL
+                ((< (-> s4-1 info index) 16) 
+              
+                 (set! (-> s5-1 0 display-level-index) 16))
+                
                (else
                  (set! (-> s5-1 0 display-level-index) (-> *level-task-data-remap* (+ (-> s4-1 info index) -1)))
                  )
@@ -738,7 +744,7 @@
 (set! (-> *game-counts-custom* type) game-count-info)
 (set! (-> *game-counts-custom* length) 40)
 (dotimes (i 16)
-;;(set! (-> *game-counts-custom* data i money-count) 12)
+(set! (-> *game-counts-custom* data i money-count) 12)
 (set! (-> *game-counts-custom* data i buzzer-count) 7)
 )
 (set! (-> *game-counts-custom* data 0 money-count) 50)
@@ -1716,7 +1722,7 @@
 (defmethod respond-progress progress ((this progress))
   (when (not (-> this in-transition))
     (cond
-      ((cpad-pressed? 0 up)
+      ((and (cpad-pressed? 0 up) (!= (-> this display-level-index) 16))
        (let ((s5-0 (-> this display-level-index)))
          (set! (-> this next-level-index) (get-next-level-down s5-0))
          (when (!= s5-0 (-> this next-level-index))
