@@ -66,6 +66,7 @@
   (eco-pill-random)
   (star)
   (eco-new)
+  (eco-ice)
   )
 
 (defun pickup-type->string ((arg0 pickup-type))
