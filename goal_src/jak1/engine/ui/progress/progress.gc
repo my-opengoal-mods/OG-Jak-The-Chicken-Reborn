@@ -1819,29 +1819,30 @@
           (case (-> self display-state)
             (((progress-screen memcard-saving))
              (cond
-               ((= (-> self display-state-stack 0) (progress-screen title))
+              ((= (-> self display-state-stack 0) (progress-screen title))
                 (let ((gp-1 (-> *setting-control* default auto-save)))
                   (sound-volume-off)
                   (set! (-> *game-info* mode) 'play)
-                  (set! *in-mort-menu* #t)
-                ;;  (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
-                ;;  (cond
-                ;;   ;; Start a new game differently if speedrunning mode is active
-                ;;   ((= (-> *pc-settings* speedrunner-mode?) #t)
-                ;;    (speedrun-start-full-game-run))
-                ;;  ;; start the game normally
-                ;;  (else
-                ;;    (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
-                ;;    (set! (-> *setting-control* default auto-save) gp-1)))
+                ;;  (set! *in-mort-menu* #t)
+                ;;TODO ;;tagmort tagmort Skip this intro if a savefile is in a custom level
+                  (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
+                  (cond
+                  ;; Start a new game differently if speedrunning mode is active
+                  ((= (-> *pc-settings* speedrunner-mode?) #t)
+                    (speedrun-start-full-game-run))
+                  ;; start the game normally
+                  (else
+                    (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
+                    (set! (-> *setting-control* default auto-save) gp-1)))
                   )
                 (the-as object (set-master-mode 'game))
                 )
-               (else
-                 (set! v0-0 -1)
-                 (set! (-> self next-display-state) (the-as progress-screen v0-0))
-                 v0-0
-                 )
-               )
+              (else
+                (set! v0-0 -1)
+                (set! (-> self next-display-state) (the-as progress-screen v0-0))
+                v0-0
+                )
+              )
              )
             (((progress-screen memcard-formatting))
              (set! (-> self force-transition) #t)
