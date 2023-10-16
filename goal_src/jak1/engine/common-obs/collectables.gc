@@ -1836,7 +1836,7 @@
       )
     )
   )
-(defun-extern reset-saved-chicks-from-mem none)
+(defun-extern reset-saved-chick-from-mem none)
 (defun-extern get-saved-chicks-from-mem int)
 (defstate pickup (fuel-cell)
   :virtual #t
