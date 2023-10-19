@@ -11,6 +11,7 @@
 ;; The "perm" data is saved to the memory card.
 
 
+(define-extern *mort-orb-total* int)
 (define-extern runs-on-jak-death (function symbol none))
 ;;Forward declaration Variable for mod base settings
 (define-extern startingDebugContinuePoint (string))
