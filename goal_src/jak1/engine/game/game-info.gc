@@ -379,9 +379,14 @@
                ;; increment our total money in the game (out of the 2000 max orbs)
                (+! (-> this money-total) amount)
                ;; if we have all the money in our level, display the all orbs graphic
+               (if (>= (-> *game-info* money-total) *mort-orb-total*)
+               (activate-orb-all -1)
                (if (= (-> this money-per-level level-idx) (-> (get-game-count level-idx) money-count))
                    (activate-orb-all level-idx)
                    )
+
+               )
+
                )
              )
            )
@@ -420,9 +425,13 @@
                ;; increment our total money in the game (out of the 2000 max orbs)
                (+! (-> obj money-total) amount)
                ;; if we have all the money in our level, display the all orbs graphic
+                 (if (>= (-> *game-info* money-total) *mort-orb-total*)
+               (activate-orb-all -1)
                (if (= (-> obj money-per-level level-idx) (-> (get-game-count level-idx) money-count))
                    (activate-orb-all level-idx)
                    )
+
+               )
                )
              )
            )
