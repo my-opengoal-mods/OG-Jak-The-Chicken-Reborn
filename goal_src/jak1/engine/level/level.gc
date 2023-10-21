@@ -1059,14 +1059,14 @@
   ;; og:preserve-this pc port added option to show every actor regardless
 
   ;; always spawn sage-finalboss so we can do credits warp
-  (cond
-    ((= (-> (the entity-actor actor) etype)  (the-as symbol sage-finalboss))
-      (return #t)
-      )
-    (else
-      ;; (format 0 "non sage-finalboss ~A~%" (-> (the entity-actor arg1) etype symbol))
-      )
-    )
+  ;; (cond
+  ;;   ((= (-> (the entity-actor actor) etype)  (the-as symbol sage-finalboss))
+  ;;     (return #t)
+  ;;     )
+  ;;   (else
+  ;;     ;; (format 0 "non sage-finalboss ~A~%" (-> (the entity-actor arg1) etype symbol))
+  ;;     )
+  ;;   )
 
 
    ;; hack to force visibility of stuff moved (rather than update visibility data)
