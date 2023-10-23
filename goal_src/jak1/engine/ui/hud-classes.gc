@@ -1202,7 +1202,11 @@
         (((hud-collectable-view original))
           ;; show original (cells collected across entire game)
           (draw-string-xy
+<<<<<<< HEAD
             (string-format "~D" (-> this value))
+=======
+            (string-format "~D" (+  (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))saved-chicks) (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))current-chicks)));;(-> obj value))
+>>>>>>> 5a16e0639 (add mort-text display add chicks to cell coutner)
             buf
             string-x
             string-y
