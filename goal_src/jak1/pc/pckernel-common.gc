@@ -273,7 +273,7 @@
   (update-from-os obj)
   (update-to-os obj)
 
- ;; (update-discord-rpc obj)
+  (update-discord-rpc obj)
 
   ;; update auto-splitter info
   (update-speedrun obj)
