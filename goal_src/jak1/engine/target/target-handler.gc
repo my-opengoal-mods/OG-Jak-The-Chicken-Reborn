@@ -173,6 +173,7 @@
           (target-height-above-ground)
           )
      )
+     )
     (('neck)
      (set! (-> self neck flex-blend) (the-as float (-> arg3 param 0)))
      (cond
@@ -848,8 +849,8 @@
           (process->handle (the-as process (-> arg3 param 2)))
           )
         )
-       )
-     )
+       
+     
     (('play-anim)
      (go target-play-anim (the-as string (-> arg3 param 0)) (the-as handle arg1))
      )
@@ -892,6 +893,8 @@
       )
     )
   )
+))
+
 
 (defbehavior target-dangerous-event-handler target ((arg0 process) (arg1 int) (arg2 symbol) (arg3 event-message-block))
   (case arg2

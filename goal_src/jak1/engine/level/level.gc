@@ -1053,7 +1053,7 @@
 ;; method 27 level
 ;;(define-extern money symbol)
 ;; method 10 level
-(defmethod is-object-visible? level ((this level) (arg0 int))
+(defmethod is-object-visible? level ((this level) (arg0 int) (actor entity))
   "Is arg0 visible? Note that this will return #f if the visibility data is not loaded."
 
   ;; og:preserve-this pc port added option to show every actor regardless

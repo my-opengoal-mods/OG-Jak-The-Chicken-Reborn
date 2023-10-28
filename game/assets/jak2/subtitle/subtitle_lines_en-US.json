@@ -1,5 +1,16 @@
 {
-  "cutscenes": {},
+   "cutscenes": {
+    "fisher-accept": [
+      "SĄ DWA TYPY DOBRYCH RYB DO ZŁAPANIA:",
+      "JEDNOFUNTOWE RYBCIE, I PIĘCIOFUNTOWE RYBCIE.",
+      "HEH. JEŚLI NIE ZŁAPIESZ 20 FUNTÓW DOBRYCH RYB",
+      "WTEDY ZABIORĘ MOJĄ SIATKĘ OD WAS Z POWROTEM!",
+      "W TEJ RZECZE GRASUJĄ TRUJĄCE WĘGORZE.",
+      "ZŁAPCIE CHOĆBY JEDNEGO Z TYCH SMARKÓW",
+      "A ZATRUJECIE CAŁY PRZEKLĘTY POŁÓW!"
+    ]
+
+  },
   "other": {
     "DSbop001": [
       "You sure seem angry, Jak."
