@@ -390,7 +390,7 @@
           )
     ;; set up a prim group with one sphere
     (let ((prim-group (new 'process 'collide-shape-prim-group cshape (the uint 1) 0)))
-      (set! (-> prim-group prim-core collide-as) (collide-kind enemy))
+      (set! (-> prim-group prim-core collide-as) (collide-kind background))
       (set! (-> prim-group collide-with) (collide-kind target))
       (set! (-> prim-group prim-core offense) (collide-offense touch))
       (set-vector! (-> prim-group local-sphere) 0.0 (meters 0.5) 0.0 (meters 1.25))
@@ -430,7 +430,7 @@
   (set! (-> this root scale z) scale)
   )
   ;;Shiny chicken
-  (when (= (rand-vu-int-range 0 4096) 4096)
+  (when (= (rand-vu-int-range 0 4096) 69)
   (set! (-> this draw color-mult x) (rand-vu-float-range 0.0 70.0))
   (set! (-> this draw color-mult y) (rand-vu-float-range 0.0 70.0))
   (set! (-> this draw color-mult z) (rand-vu-float-range 0.0 70.0)))
@@ -442,6 +442,7 @@
   (set! (-> this mask) (logior (process-mask enemy) (-> this mask)))
   (logclear! (-> this mask) (process-mask actor-pause))
   (init-skel! this)
+  (set! (-> this skel effect) (the effect-control #f))
   (set! (-> this align) (new 'process 'align-control this))
   (set! (-> this notice-dist) NOTICE_DIST)
   (set! (-> this stop-chase-dist) STOP_CHASE_DIST)

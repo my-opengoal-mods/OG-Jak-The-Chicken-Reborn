@@ -767,7 +767,7 @@
   )
 
 
-  obj
+  this
   )
 
 ;; manually set up game-counts

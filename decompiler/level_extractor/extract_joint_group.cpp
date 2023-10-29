@@ -17,7 +17,7 @@ void extract_joint_group(const ObjectFileData& ag_data,
     auto& data = out[name];
     data.art_name = name;
     data.art_group_name = ag_data.name_in_dgo;
-    ASSERT(data.joint_group.empty());
+    // ASSERT(data.joint_group.empty());
     const int length = read_plain_data_field<int32_t>(ref, "length", dts);
     Ref iter = get_field_ref(ref, "data", dts);
     std::map<int, int> offset_to_joint;
