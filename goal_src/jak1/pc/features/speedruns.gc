@@ -463,6 +463,7 @@
              (!= (-> (level-get-target-inside *level*)name ) 'mort-title))
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf))
                                       (bucket-id subtitle))
+
       (draw-string-xy (string-format "Speedrunner Mode ~%~S ~%~S ~%Category: ~S ~%Cutscene Skips ~A"
                                     *mod-version-text*
                                     *pc-settings-built-sha*
