@@ -4,7 +4,6 @@
     ;; name: mod-custom-code.gc
     ;; name in dgo: mod-custom-code
     ;; dgos: TODO
-(define *chicken-home* #f)
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; What is this file for.
@@ -39,9 +38,26 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Setup total money/chicks per level
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun get-saved-chicks-from-mem ()
+  ;;(format #t "getting unlock level it is ~D~%" (-> *game-info* money-per-level 3))
+  (the int (-> *game-info* money-per-level 5) )
+)
+
+(defun reset-saved-chick-from-mem()
+(when (nonzero? (get-saved-chicks-from-mem))
+(format #t "All chicks in this level are safe, setting saved chicks mem to 0")
+(set! (-> *game-info* money-per-level 5) 0)
+)
+(none))
+
 ;; At first set everything to its index - its not null and doesnt crash and is nice when finding what level is what.
+(defun reset-custom-info ()
+(reset-saved-chick-from-mem)
+
 (dotimes (i 40)
   (set! (-> *custom-level-info* data i total-chicks) 1)
+  (set! (-> *custom-level-info* data i saved-chicks) 0)
+  (set! (-> *custom-level-info* data i current-chicks) 0)
 )
 ;;Then override its index here and set it to the proper value when complete.
 (set! (-> *custom-level-info* data 16 total-chicks) 6)
@@ -70,6 +86,9 @@
 
 ;;getters
 
+(none))
+
+(reset-custom-info)
 (defun check-portal-distance ()
     (cond
       ((< (vector-vector-distance (-> *target* root trans) (-> (the-as training-part (process-by-ename "project-training-part-1") )root trans)) (meters 12))
@@ -81,7 +100,9 @@
     )
   (none)
 )
-
+#|
+ (>= (/ (-> *game-info* enter-level-time (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))) 300) (+ (/ (current-time) 300) 5))
+|#
 (defun mort-debug-text ()
  ;;mort debugging
     (if *cheat-mode*
@@ -209,6 +230,7 @@
     
       (when (and 
             *close-to-portal?*   
+            (>= (/ (current-time) 300) (+ (/ (-> *game-info* enter-level-time (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))) 300) 6))
             (> (-> current-custom-info current-chicks) 0)
             )
               ;;Remove a chick that is following, and incrment saved chick for the level. This should be moved to when the chicken uses portal imo  
@@ -220,12 +242,10 @@
               )
               (set! (-> (get-chick-from-flock (the int (-> current-custom-info current-chicks))) to-point-speed) 3.0)    
               (let ((current-timea (current-time)))
-              (set! *chicken-home* #t)
                     (until (time-elapsed? current-timea (seconds 0.35))
                     ;;(format #t "~S~%" "NOT ELAPSED")
                       (suspend)
                     )
-              (set! *chicken-home* #f)
               )
       )
     )
@@ -407,18 +427,6 @@ Temporary hardcoded hack so I can be sure how this works for release
 
   (none)
 )
-
-(defun get-saved-chicks-from-mem ()
-  ;;(format #t "getting unlock level it is ~D~%" (-> *game-info* money-per-level 3))
-  (the int (-> *game-info* money-per-level 5) )
-)
-
-(defun reset-saved-chick-from-mem()
-(when (nonzero? (get-saved-chicks-from-mem))
-(format #t "All chicks in this level are safe, setting saved chicks mem to 0")
-(set! (-> *game-info* money-per-level 5) 0)
-)
-(none))
 
 (defun restore-saved-chicks-from-mem()
 "This function runs on jak spawn, and checks if the stored memory card value is nonzero, and saved chicks is zero if so it updates it."
