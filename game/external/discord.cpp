@@ -13,7 +13,8 @@ int gDiscordRpcEnabled;
 int64_t gStartTime;
 
 static const std::map<GameVersion, std::string> rpc_client_ids = {
-    {GameVersion::Jak1, "1149903917946249236"},
+   // {GameVersion::Jak1, "1149903917946249236"},
+    {GameVersion::Jak1, "1180074138027692103"}, 
     {GameVersion::Jak2, "1060390251694149703"}};
     
 

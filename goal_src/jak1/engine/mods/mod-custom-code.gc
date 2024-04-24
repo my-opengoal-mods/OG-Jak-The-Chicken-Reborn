@@ -19,7 +19,7 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Begin function defintions.
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define *custom-cutscene?* #t)    
+(define *custom-cutscene?* #t)
 (define mort-level? #f)
 (define *show-debug* #f)
 (define spawned-chickens? #f)
@@ -129,7 +129,7 @@
 
 (defun mort-rewrite-text ()
  ;;mort debugging
-   
+
       (when (and
             (portal-mort-switch)
              (!= (-> (level-get-target-inside *level*)name ) 'mort-title))
@@ -145,7 +145,7 @@
                                      )
                       buf (- 400 70) (- 150 (* 8 16)) (font-color flat-yellow) (font-flags shadow kerning)))
           )
-    
+
 (none)
 )
 
@@ -157,7 +157,7 @@
     (if *cheat-mode*
       (when (and
             (portal-mort-switch)
-             
+
              (!= (-> (level-get-target-inside *level*)name ) 'mort-title))
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf))
                                       (bucket-id subtitle))
@@ -192,9 +192,9 @@
          )
       ;; Corrected part to update the closest position and distance
       (if (and valid? less-than-stored-pos)
-            (begin 
+            (begin
               (set! *sphere-color* *color-green*)
-              ;; (add-debug-sphere #t (bucket-id debug-no-zbuf) (-> *camera*  target-spline point i position) (meters 0.05) *sphere-color*) 
+              ;; (add-debug-sphere #t (bucket-id debug-no-zbuf) (-> *camera*  target-spline point i position) (meters 0.05) *sphere-color*)
               (if less-than-stored-pos
                   ;; If our current point is closer than our last point, store it and update closest known distance
                   (begin
@@ -208,7 +208,7 @@
   )
   ;; Draw the closest position
   ;;(format #t "WARNING: fuel-cell stall on not cloning. ~F~%" old-point-to-jak)
-  ;;(add-debug-sphere #t (bucket-id debug-no-zbuf) (-> *camera*  target-spline point *closest-pos-index* position) (meters 0.05) *sphere-color*) 
+  ;;(add-debug-sphere #t (bucket-id debug-no-zbuf) (-> *camera*  target-spline point *closest-pos-index* position) (meters 0.05) *sphere-color*)
   ;;(add-debug-text-3d #t (bucket-id debug-no-zbuf) (string-format "~D" *closest-pos-index*) (-> *camera*  target-spline point *closest-pos-index* position)  (font-color green) (the-as vector2h #f))
   (-> *camera*  target-spline point *closest-pos-index* position)
   )
@@ -227,20 +227,19 @@
           (current-custom-info (-> *custom-level-info* data current-level-idx))
           (warpgate-pos (-> (the-as training-part (process-by-ename "project-training-part-1") )root trans))
           )
-    
-      (when (and 
-            *close-to-portal?*   
-            (>= (/ (current-time) 300) (+ (/ (-> *game-info* enter-level-time (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))) 300) 6))
+
+      (when (and
+            *close-to-portal?*
             (> (-> current-custom-info current-chicks) 0)
             )
-              ;;Remove a chick that is following, and incrment saved chick for the level. This should be moved to when the chicken uses portal imo  
+              ;;Remove a chick that is following, and incrment saved chick for the level. This should be moved to when the chicken uses portal imo
               (set! (-> current-custom-info current-chicks) (- (-> current-custom-info current-chicks) 1))
               ;;We add 1 here, because we removed it above. Will need to adjust when it goes down on warp
-              (vector-copy! 
+              (vector-copy!
                 (->  (get-chick-from-flock (the int (-> current-custom-info current-chicks))) target-pos)
                 warpgate-pos
               )
-              (set! (-> (get-chick-from-flock (the int (-> current-custom-info current-chicks))) to-point-speed) 3.0)    
+              (set! (-> (get-chick-from-flock (the int (-> current-custom-info current-chicks))) to-point-speed) 3.0)
               (let ((current-timea (current-time)))
                     (until (time-elapsed? current-timea (seconds 0.35))
                     ;;(format #t "~S~%" "NOT ELAPSED")
@@ -282,113 +281,113 @@
 (return #f)
 )
   ;; (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))
-  ;; (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))total-chicks) 
+  ;; (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))total-chicks)
  (if (portal-mort-switch)(go-virtual-process (portal-mort-switch) basebutton-going-down)(sound-play "caught-eel"))
  (case (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))
-        ((16)      
+        ((16)
           ;; Code here runs as soon as you pickup a powercell
             (when (< (get-unlock-level)  1)
               (unlock-level-func 1)
             )
           )
-        ((17)      
+        ((17)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  2)
               (unlock-level-func 2)
             )
           )
-        ((18)      
+        ((18)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  3)
               (unlock-level-func 3)
             )
           )
-        ((19)      
+        ((19)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  4)
               (unlock-level-func 4)
             )
           )
-        ((20)      
+        ((20)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  5)
               (unlock-level-func 5)
             )
           )
-        ((21)      
+        ((21)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  6)
               (unlock-level-func 6)
             )
           )
-        ((22)      
+        ((22)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  7)
               (unlock-level-func 7)
             )
           )
-        ((23)      
+        ((23)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  8)
               (unlock-level-func 8)
             )
           )
-        ((24)      
+        ((24)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  9)
               (unlock-level-func 9)
             )
           )
-        ((25)      
+        ((25)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  10)
               (unlock-level-func 10)
             )
           )
-        ((26)      
+        ((26)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  11)
               (unlock-level-func 11)
             )
           )
-        ((27)      
+        ((27)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  12)
               (unlock-level-func 12)
             )
           )
-        ((28)      
+        ((28)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  13)
               (unlock-level-func 13)
             )
           )
-        ((29)      
+        ((29)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  14)
               (unlock-level-func 14)
             )
           )
-        ((30)      
+        ((30)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  15)
               (unlock-level-func 15)
             )
           )
-        ((31)      
+        ((31)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  16)
               (unlock-level-func 16)
             )
           )
-        ((32)      
+        ((32)
           ;; Code here runs at the end of any powercell cutscene
             (when (< (get-unlock-level)  17)
               (unlock-level-func 17)
             )
           )
         )
-  
+
 
 #|
 Temporary hardcoded hack so I can be sure how this works for release
@@ -414,9 +413,9 @@ Temporary hardcoded hack so I can be sure how this works for release
   (when (>= (get-saved-chicks) (get-total-chicks)
    )
     (reset-saved-chick-from-mem)
-    (when *debug-segment* 
+    (when *debug-segment*
     (format #t "ERROR TRYING TO ADD MORE THAN TOTAL CHICKS IN LEVEL~%"))
-    
+
     (auto-save-command 'auto-save 0 0 *default-pool*)
     (return #f)
   )
@@ -435,7 +434,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 )
 )
 (defun get-total-chicks ()
-(-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))total-chicks) 
+(-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))total-chicks)
 )
 
 (defun  update-total-chicks ((amount int))
@@ -444,7 +443,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 )
 
 (defun get-saved-chicks ()
-(-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))saved-chicks) 
+(-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))saved-chicks)
 )
 
 (defun  update-saved-chicks ((amount int))
@@ -452,7 +451,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 (none)
 )
 (defun get-current-chicks ()
-(-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))current-chicks) 
+(-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))current-chicks)
 )
 
 (defun  update-current-chicks ((amount int))
@@ -474,31 +473,31 @@ Temporary hardcoded hack so I can be sure how this works for release
 (define *count-crates* 0)
 (defun get-loaded-cell-count ()
 (set! *count-crates* 0)
-(execute-process-tree *active-pool* (lambda ((proc process)) 
-(when (-> proc entity) 
+(execute-process-tree *active-pool* (lambda ((proc process))
+(when (-> proc entity)
 (let (
-    (vec (-> proc entity trans)) 
-    (quat (-> proc entity quat)) 
+    (vec (-> proc entity trans))
+    (quat (-> proc entity quat))
     (name (the string (-> proc name))))
     (when (= (-> (the entity-actor (-> proc entity)) etype) fuel-cell)
 
     ;;We know its a cell
 
- 
+
 
     ;;If its wood, increase our count
 
     (set! *count-crates* (+ *count-crates* 1))
-    
+
     )
-    
+
     ))
-    
+
 
     )
     *kernel-context*)
     *count-crates*
-  
+
 )
   (defun mort-main-menu ()
 
@@ -518,7 +517,7 @@ Temporary hardcoded hack so I can be sure how this works for release
              ;;This function sleeps for 27 seconds so it has to be in another process to not block this one
            (when (not (process-by-name "josh-suprise-sound-25" *active-pool*))  (process-spawn-function process josh-suprise-sound-25 :name "josh-suprise-sound-25"))
         )
-         
+
           )
 
         (if (and  (= (-> (level-get-target-inside *level*)name ) 'mort-title) (!= (-> *target* root trans y) (meters 1)))
@@ -571,33 +570,33 @@ Temporary hardcoded hack so I can be sure how this works for release
 (defun warp-demon-chick ()
 
 
-(dotimes (i NUM_FLOCKPOINTS) 
+(dotimes (i NUM_FLOCKPOINTS)
   (let* (
          (warpgate-pos (-> (the-as training-part (process-by-ename "project-training-part-1") )root trans))
          )
 ;;If they are close to the portal
-    (when (and (!= (get-chick-from-flock i) #f) 
+    (when (and (!= (get-chick-from-flock i) #f)
     (the-as training-part (process-by-ename "project-training-part-1") )
-                                    (< (vector-vector-distance 
-                                    (-> (the-as training-part (process-by-ename "project-training-part-1") )root trans) 
+                                    (< (vector-vector-distance
+                                    (-> (the-as training-part (process-by-ename "project-training-part-1") )root trans)
                                     (-> (get-chick-from-flock i) root trans)) (meters 0.1))
                                     )
                                     ;;Play portal effect on them
                                     (if (!=  (-> (get-chick-from-flock i) skel effect) #f)
                                          (effect-control-method-10  (-> (get-chick-from-flock i) skel effect) 'death-warp-in -1.0 -1 )
                                     )
-                               
+
                                     ;;set their target to 1,1,1
                                     (vector-identity! (-> (get-chick-from-flock i) target-pos))
                                     (auto-save-command 'auto-save 0 0 *default-pool*)
     (update-saved-chicks (+ (get-saved-chicks) 1))
     (update-saved-chicks-in-mem 1)
-    
+
                                     (if (>= (get-saved-chicks) (get-total-chicks))
     (begin
       (set-unlock-level)
-    
-      
+
+
      ;; (reset-actors #t) ;;HACK for some reason, the warp gate doesnt let us use it after coming out of it but reseting actor fixes this.
     ))
 
@@ -610,7 +609,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 )
 
- 
+
 (none)
 )
 
@@ -618,14 +617,14 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 (defun run-mort-code? ()
 "When these are true, we dont want to run mort code."
-(and *target* 
+(and *target*
       (!= (-> (level-get-target-inside *level*)name) title) ;; this doesnt work and should be 'title but I am afraid fixing it will cause bugs
       (!= (-> (level-get-target-inside *level*)name) mort-title)
-      (!= (-> (level-get-target-inside *level*)name) 'mort-title) 
+      (!= (-> (level-get-target-inside *level*)name) 'mort-title)
       (!= (-> *target* state name) 'target-continue)
       ;;This warp stuff is a total hack to fix warp-demon-chick in retail mode. Id like to remove it one day
-      (!= (-> *target* state name) 'target-warp-out) 
-      (!= (-> *target* state name) 'target-warp-in) 
+      (!= (-> *target* state name) 'target-warp-out)
+      (!= (-> *target* state name) 'target-warp-in)
       mort-level?)
 )
 
@@ -651,8 +650,8 @@ Temporary hardcoded hack so I can be sure how this works for release
   )
   )
 
-   
-(cond 
+
+(cond
 ((and (string= *currentSpoolName* "ndi-intro") (= *currentCutsceneFrame* 420))
    (play-rand-sound "snd/zed.mp3" (the int (-> *setting-control* default sfx-volume)))
    (until (time-elapsed? current-timea (seconds 1))
@@ -972,7 +971,7 @@ Temporary hardcoded hack so I can be sure how this works for release
     (defun runs-every-frame ()
     "this is ran in its own process called run-every-frame-proc"
     ;;This is a hack to run softlock prevention
-    
+
     (when (and (not (cpad-hold? 0 l3))(cpad-hold? 0 down))
     (mort-chicks-text)
     )
@@ -984,15 +983,15 @@ Temporary hardcoded hack so I can be sure how this works for release
     ;;This is a hack to try to patch a bug, remove if it messes up save/restoring
     (if (and *target* (= (-> *target* state name) 'target-warp-out))
     (reset-saved-chick-from-mem)
-    ) 
-    
+    )
+
     (when #t
     ;;(format #t "~A" (-> *target* state name))
 
-      (if (and *target* 
-          (= (-> *target* state name) 'target-stance) 
-          (not (movie?)) 
-          (!= (level-get-target-inside *level*) #f) 
+      (if (and *target*
+          (= (-> *target* state name) 'target-stance)
+          (not (movie?))
+          (!= (level-get-target-inside *level*) #f)
           (!= (-> (level-get-target-inside *level*)name) 'misty)
           (!= (-> (level-get-target-inside *level*)name) 'village1)
           (!= (-> (level-get-target-inside *level*)name) 'beach)
@@ -1002,7 +1001,7 @@ Temporary hardcoded hack so I can be sure how this works for release
           )
       (have-all-chicks-safe)
       )
-      ;; 
+      ;;
       ;; )
 
     ;;This is kind of a hack to start up during the opening cutscene
@@ -1016,7 +1015,7 @@ Temporary hardcoded hack so I can be sure how this works for release
               )
     (str-play-stop *currentSpoolName*)
     (set! (-> *art-control* active-stream) #f)
-    
+
     )
 
     (when (and (string= *currentSpoolName* "finalbosscam-white-eco") (= *currentCutsceneFrame* 2))
@@ -1030,7 +1029,7 @@ Temporary hardcoded hack so I can be sure how this works for release
     (play-rand-sound "snd/farts/vinefart.mp3" (the int (-> *setting-control* default dialog-volume)))
     )
 
-   
+
    ;; (sound-manager)
     (when (run-mort-code?)
       ;;   (if (and (= (-> *flock-points* points 1 x) 0.0) (!= (-> *target* state name) 'target-warp-out) (!= (-> *target* state name) 'target-continue)(!= (-> *target* state name) 'target-warp-in))
@@ -1046,9 +1045,9 @@ Temporary hardcoded hack so I can be sure how this works for release
       (find-best-master-mark)
       (mort-main-menu)
 
-    
+
     )
-    
+
       (none)
     )
 
@@ -1072,10 +1071,10 @@ Temporary hardcoded hack so I can be sure how this works for release
 (none))
 
 (defun variable-every-frame()
- "Responsible for updating most globals - if this isnt running something is terribly wrong" 
+ "Responsible for updating most globals - if this isnt running something is terribly wrong"
 (update-mort-vars)
 ;;If we input a button combo and we are in debug, unlock the next level
-      (when (and (cpad-pressed? 0 l1) (cpad-pressed? 0 r1) *cheat-mode*) 
+      (when (and (cpad-pressed? 0 l1) (cpad-pressed? 0 r1) *cheat-mode*)
       (if (portal-mort-switch)(go-virtual-process (portal-mort-switch) basebutton-going-down)(sound-play "caught-eel"))
       (set-unlock-level)
       ;;This might be ok to revert later
@@ -1088,23 +1087,26 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 (defun text-every-frame ()
 "This should be used to draw text, Near portal need X chicks etc"
-     
-      (if *show-input-display* 
+
+      (if *show-input-display*
         (input-display-on)
         (input-display-off)
         )
-    
+
 (none))
 
 (defun debug-text-every-frame ()
 "This process ONLY spawns when debug mode is on and shows some extra info"
 "I have no idea why the close-to-portal check is needed but it works."
+   (when *debug-segment*
+
     (update-mort-vars)
     (when (and run-mort-code? #t)
      (draw-beta-flock-points)
      (mort-rewrite-text)
     )
-    
+   )
+
 (none))
 
 
@@ -1129,7 +1131,7 @@ Temporary hardcoded hack so I can be sure how this works for release
        (set! (-> *part-id-table* 765  init-specs 2 initial-valuef) (meters (string->float (the string (res-lump-struct (entity-by-name "project-training-part-1") 'game_task structure))))
      )
   )
-  
+
 
 
   )
@@ -1140,8 +1142,8 @@ Temporary hardcoded hack so I can be sure how this works for release
                         (string= *currentSpoolName* "finalbosscam-white-eco")
                         (string= *currentSpoolName* "green-sagecage-daxter-sacrifice")
                         (string= *currentSpoolName* "green-sagecage-outro-beat-boss-a")
-                        
-                        
+
+
                         ))
                         (set! (-> *pc-settings* skip-movies?) #f)
                         (set! (-> *pc-settings* skip-movies?) #t)
@@ -1158,9 +1160,9 @@ Temporary hardcoded hack so I can be sure how this works for release
           (if (or (and *custom-cutscene?* (or  (string= *currentSpoolName* "sage-intro-sequence-a")
                    (string= *currentSpoolName* "sidekick-human-intro-sequence-b")
                    (string= *currentSpoolName* "sidekick-human-intro-sequence-c")))
-                   
-                   
-                   (and *custom-cutscene?*  (string= *currentSpoolName* "finalbosscam-white-eco") 
+
+
+                   (and *custom-cutscene?*  (string= *currentSpoolName* "finalbosscam-white-eco")
 
                     (or (< *currentCutsceneFrame* 267)
                     (> *currentCutsceneFrame* 321)
@@ -1171,7 +1173,7 @@ Temporary hardcoded hack so I can be sure how this works for release
                    )
 
 
-          
+
                         (begin
                         ;;store the current volume setting
                         (if (= *old-voice-volume* 0.0)
@@ -1182,13 +1184,13 @@ Temporary hardcoded hack so I can be sure how this works for release
                         )
                         (begin
                         (if (and (!= *old-voice-volume* 0.0 )(= (-> *setting-control* default dialog-volume) 0.0))
-                          (begin 
+                          (begin
                           (set! (-> *setting-control* default dialog-volume) *old-voice-volume*)
                           (set! *old-voice-volume* 0.0)
                           )
                         )
                   )
-          
+
           )
 
 
@@ -1222,11 +1224,11 @@ Temporary hardcoded hack so I can be sure how this works for release
 
     (defun runs-on-cell-pickup ((cell-event symbol))
       (case cell-event
-        (('pickup)      
+        (('pickup)
           ;; Code here runs as soon as you pickup a powercell
 
           )
-        (('cutscene-end)      
+        (('cutscene-end)
           ;; Code here runs at the end of any powercell cutscene
 
           )
@@ -1240,29 +1242,29 @@ Temporary hardcoded hack so I can be sure how this works for release
         ;; Code here runs as soon as you pickup ANY eco
 
         (case eco-type
-          (((pickup-type eco-yellow))      
+          (((pickup-type eco-yellow))
             ;; Code here runs as soon as you pickup yellow eco
 
             )
-          (((pickup-type eco-red))      
+          (((pickup-type eco-red))
             ;; Code here runs as soon as you pickup red eco
 
             )
-          (((pickup-type eco-blue))      
+          (((pickup-type eco-blue))
             ;; Code here runs as soon as you pickup blue eco
 
             )
-          (((pickup-type eco-pill))      
+          (((pickup-type eco-pill))
             ;; Code here runs as soon as you pickup small green eco
 
             )
-          (((pickup-type eco-green))      
-            ;; Code here runs as soon as you pickup big green eco 
+          (((pickup-type eco-green))
+            ;; Code here runs as soon as you pickup big green eco
 
             )
-          
+
           )
-        
+
         (when from-vent?
           ;; Code here runs only if the eco was picked up from a vent
 
@@ -1273,10 +1275,10 @@ Temporary hardcoded hack so I can be sure how this works for release
       )
 
 (defun runs-on-warp-confirm ()
-  (dotimes (i NUM_FLOCKPOINTS) 
+  (dotimes (i NUM_FLOCKPOINTS)
     (when done-init?
-     (vector-identity! (-> (get-chick-from-flock i) target-pos))      
-     )                
+     (vector-identity! (-> (get-chick-from-flock i) target-pos))
+     )
     )
 
 (none))
@@ -1323,31 +1325,31 @@ Temporary hardcoded hack so I can be sure how this works for release
                 (play-main-music "SND/music-ice-canyon2.mp3" (the int (-> *setting-control* default music-volume)));;2?
                 (play-main-music "SND/music-ice-canyon-cold-pipe.mp3" (the int (-> *setting-control* default music-volume)));;2?
          )
-         )  
+         )
          (('coins)
           (play-main-music "SND/music-coins.mp3" (the int (-> *setting-control* default music-volume)))
           )
          (('villa-cube)
            (play-main-music "SND/music-monument1.mp3" (the int (-> *setting-control* default music-volume))) ;; monument and villa cuba share audio
-          )                  
+          )
          (('ice-slide)
           (play-main-music "SND/music-ice-slide.mp3" (the int (-> *setting-control* default music-volume)))
           )
          (('islands)
           (play-main-music "SND/music-holly-wood1.mp3" (the int (-> *setting-control* default music-volume))) ;; shares track with islands
-          )          
+          )
          (('glass-towers 'chemical-factory)
           (play-main-music "SND/music-glass-towers-chemical-factory.mp3" (the int (-> *setting-control* default music-volume)))
-          )          
+          )
          (('space-bridge)
           (play-main-music "SND/music-space-bridge.mp3" (the int (-> *setting-control* default music-volume)))
-          )          
+          )
          (('garden)
           (play-main-music "SND/music-block-man.mp3" (the int (-> *setting-control* default music-volume))) ;;FIX
-          )          
+          )
          (('block-man)
           (play-main-music "SND/music-block-man.mp3" (the int (-> *setting-control* default music-volume)))
-          )          
+          )
          (('cube-face)
           (play-main-music "SND/music-cube-face.mp3" (the int (-> *setting-control* default music-volume)))
           )
@@ -1356,18 +1358,18 @@ Temporary hardcoded hack so I can be sure how this works for release
           ;;(stop-main-music) This function is broken but playing a invalid sound does the same thing
           )
          )
-        
+
 (none))
 
     (defun runs-on-jak-spawn ()
-      ;; Code here runs every time jak spawns (loading a file new game or death)   
+      ;; Code here runs every time jak spawns (loading a file new game or death)
       (init-title)
 
 
-      
+
       (format #t  "RUNNING MUSIC PROC~%")
       (process-spawn-function process music-manager-proc)
-      (restore-cells) 
+      (restore-cells)
       (restore-saved-chicks-from-mem)
       (none)
       )
@@ -1376,7 +1378,7 @@ Temporary hardcoded hack so I can be sure how this works for release
       (case death-event
         (('dying)
           ;; Code here runs immediately every time jak dies, before any death animation or death cutscene
-          
+
           )
         (('blackout)
           ;; Code here runs after jak dies (and any death cutscene finishes), during the blackout before he spawns
@@ -1384,7 +1386,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
           )
         )
-      
+
       (none)
       )
 
