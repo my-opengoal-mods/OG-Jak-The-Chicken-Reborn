@@ -159,12 +159,12 @@ std::optional<std::string> try_get_project_path_from_path(const std::string& pat
   lg::info("Current path in loop - {}", current_path);
   while (!current_path.empty()) {
     if (current_path == ".github") {
-      lg::info("No parent folder found");
+      lg::info("No parent folder found A");
       return {};  // No parent folder found
     }
-    std::size_t last_slash_pos = current_path.rfind('\\');
+    std::size_t last_slash_pos = current_path.rfind('/');
     if (last_slash_pos == std::string::npos) {
-      lg::info("No parent folder found");
+      lg::info("No parent folder found B");
       return {};  // No parent folder found
     }
     current_path = current_path.substr(0, last_slash_pos);
@@ -172,11 +172,8 @@ std::optional<std::string> try_get_project_path_from_path(const std::string& pat
     if (fs::exists(current_path + "/.github")) {
       lg::info("Project path found - {}", current_path);
       return current_path;
-
-
     }
-  
-}
+  }
 }
 
 /*!
