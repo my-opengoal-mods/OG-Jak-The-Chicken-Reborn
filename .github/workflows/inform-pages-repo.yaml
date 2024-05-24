@@ -11,7 +11,7 @@ on:
 jobs:
   gen-docs:
     name: Generate Documentation
-    if: github.repository == 'open-goal/jak-project'
+    if: github.repository == 'my-opengoal-mods/OG-Jak-The-Chicken-Reborn'
     runs-on: ubuntu-20.04
     timeout-minutes: 45
     env: # overrides: https://github.com/mbitsnbites/buildcache/blob/master/doc/configuration.md

@@ -112,7 +112,7 @@
     "rand-vu-init",
     "rand-vu",
     "rand-vu-nostep",
-    // text - TODO - https://github.com/open-goal/jak-project/issues/1939
+    // text - TODO - https://github.com/my-opengoal-mods/OG-Jak-The-Chicken-Reborn/issues/1939
     "load-game-text-info",
     // MATRIX
     "matrix-axis-sin-cos-vu!",
@@ -329,7 +329,7 @@
     "(hit under-break-door)": ["code"], // missing cast to art-joint-anim
     "(target-pilot-get-on target)": ["trans"], // missing cast
     "(idle krew-boss)": ["trans"], // collide-shape array created on the stack
-    "(idle-close security-wall)": ["code"], // https://github.com/open-goal/jak-project/issues/2168
+    "(idle-close security-wall)": ["code"], // https://github.com/my-opengoal-mods/OG-Jak-The-Chicken-Reborn/issues/2168
     "(explode cty-guard-turret)": ["code"] // handle casts not sorted out
   }
 }

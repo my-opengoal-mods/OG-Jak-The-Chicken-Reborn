@@ -28,11 +28,11 @@ os.makedirs(os.path.join(args.outputDir, "linux"), exist_ok=True)
 # Download the Release
 toolingVersion = args.toolingVersion
 if toolingVersion == "latest":
-    # Get the latest open-goal/jak-project release
+    # Get the latest my-opengoal-mods/OG-Jak-The-Chicken-Reborn release
     toolingVersion = requests.get(
-        "https://api.github.com/repos/open-goal/jak-project/releases/latest"
+        "https://api.github.com/repos/my-opengoal-mods/OG-Jak-The-Chicken-Reborn/releases/latest"
     ).json()["tag_name"]
-releaseAssetUrl = "https://github.com/open-goal/jak-project/releases/download/{}/opengoal-linux-{}.tar.gz".format(
+releaseAssetUrl = "https://github.com/my-opengoal-mods/OG-Jak-The-Chicken-Reborn/releases/download/{}/opengoal-linux-{}.tar.gz".format(
     toolingVersion, toolingVersion
 )
 urllib.request.urlretrieve(

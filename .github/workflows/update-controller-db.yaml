@@ -7,7 +7,7 @@ on:
 
 jobs:
   update-controller-db:
-    if: github.repository == 'open-goal/jak-project'
+    if: github.repository == 'my-opengoal-mods/OG-Jak-The-Chicken-Reborn'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

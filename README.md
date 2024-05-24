@@ -3,7 +3,7 @@ Serves as a base template for openGOAL mods that will be supported via [opengoal
 
 *OUTDATED*
 
-- Please ensure you are not committing copyrighted material to your repo (the `.gitignore` should help prevent this). 
+- Please ensure you are not committing copyrighted material to your repo (the `.gitignore` should help prevent this).
 - Generally speaking you should only be updating certain directories/files:
   - the executable binaries (`goalc.exe`, `gk.exe`, `extractor.exe`)
   - GOAL code (`/data/goal_src`)
@@ -17,9 +17,9 @@ Serves as a base template for openGOAL mods that will be supported via [opengoal
 <p align="center">
   <a href="https://opengoal.dev/docs/intro" rel="nofollow"><img src="https://img.shields.io/badge/Documentation-Here-informational" alt="Documentation Badge" style="max-width:100%;"></a>
   <a title="Crowdin" target="_blank" href="https://crowdin.com/project/opengoal"><img src="https://badges.crowdin.net/opengoal/localized.svg"></a>
-  <a target="_blank" rel="noopener noreferrer" href="https://github.com/open-goal/jak-project/actions/workflows/build-matrix.yaml"><img src="https://github.com/open-goal/jak-project/actions/workflows/build-matrix.yaml/badge.svg" alt="Linux and Windows Build" style="max-width:100%;"></a>
-  <a href="https://www.codacy.com/gh/open-goal/jak-project/dashboard?utm_source=github.com&utm_medium=referral&utm_content=open-goal/jak-project&utm_campaign=Badge_Coverage" rel="nofollow"><img src="https://app.codacy.com/project/badge/Coverage/29316d04a1644aa390c33be07289f3f5" alt="Codacy Badge" style="max-width:100%;"></a>
-  <a href="https://www.codacy.com/gh/open-goal/jak-project/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=open-goal/jak-project&amp;utm_campaign=Badge_Grade" rel="nofollow"><img src="https://app.codacy.com/project/badge/Grade/29316d04a1644aa390c33be07289f3f5" alt="Codacy Badge" style="max-width:100%;"></a>
+  <a target="_blank" rel="noopener noreferrer" href="https://github.com/my-opengoal-mods/OG-Jak-The-Chicken-Reborn/actions/workflows/build-matrix.yaml"><img src="https://github.com/my-opengoal-mods/OG-Jak-The-Chicken-Reborn/actions/workflows/build-matrix.yaml/badge.svg" alt="Linux and Windows Build" style="max-width:100%;"></a>
+  <a href="https://www.codacy.com/gh/my-opengoal-mods/OG-Jak-The-Chicken-Reborn/dashboard?utm_source=github.com&utm_medium=referral&utm_content=my-opengoal-mods/OG-Jak-The-Chicken-Reborn&utm_campaign=Badge_Coverage" rel="nofollow"><img src="https://app.codacy.com/project/badge/Coverage/29316d04a1644aa390c33be07289f3f5" alt="Codacy Badge" style="max-width:100%;"></a>
+  <a href="https://www.codacy.com/gh/my-opengoal-mods/OG-Jak-The-Chicken-Reborn/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=my-opengoal-mods/OG-Jak-The-Chicken-Reborn&amp;utm_campaign=Badge_Grade" rel="nofollow"><img src="https://app.codacy.com/project/badge/Grade/29316d04a1644aa390c33be07289f3f5" alt="Codacy Badge" style="max-width:100%;"></a>
   <a href="https://discord.gg/VZbXMHXzWv"><img src="https://img.shields.io/discord/756287461377703987" alt="Discord"></a>
   <a href="https://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt=PRs Welcome></a>
 </p>
@@ -74,7 +74,7 @@ Additionally, you can find further documentation and answers to **frequently ask
 
 If you just want to play the game, you can follow the steps in this video: https://www.youtube.com/watch?v=p8I9NfuZOgE
 
-We do not distribute any assets from the game - you must use your own legitimately obtained PS2 copy of the game. We support every retail PAL, NTSC, and NTSC-J build, including Greatest Hits copies. 
+We do not distribute any assets from the game - you must use your own legitimately obtained PS2 copy of the game. We support every retail PAL, NTSC, and NTSC-J build, including Greatest Hits copies.
 
 ## Project Description
 
@@ -118,7 +118,7 @@ If this does not sound like you and you just want to play the game, refer to the
 
 ### Docker
 
-All three Linux systems are supported using Docker. 
+All three Linux systems are supported using Docker.
 
 Pick your supported prefered flavour of linux and build your chosen image
 
@@ -134,7 +134,7 @@ docker run -v "$(pwd)"/build:/home/jak/jak-project/build -it jak bash
 
 Note: If you change the content of the `build/` directory you'll need to rerun the `build` command. Alternatively you can get the build via `docker cp`.
 
-This will link your `build/` folder to the images so can validate your build or test it on an external device. 
+This will link your `build/` folder to the images so can validate your build or test it on an external device.
 
 Docker images can be linked into your IDE (e.g. CLion) to help with codesniffing, static analysis, run tests and continuous build.
 
@@ -241,7 +241,7 @@ scoop install git llvm nasm python task
 Clone the repository by running the following command in your folder of choice.
 
 ```sh
-git clone https://github.com/open-goal/jak-project.git
+git clone https://github.com/my-opengoal-mods/OG-Jak-The-Chicken-Reborn.git
 ```
 
 This will create a `jak-project` folder, open the project as a CMake project via Visual Studio.
