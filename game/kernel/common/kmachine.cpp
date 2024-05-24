@@ -1096,10 +1096,10 @@ void init_common_pc_port_functions(
   make_func_symbol_func("pc-mkdir-file-path", (void*)pc_mkdir_filepath);
 
   //Play sound file
-  make_func_symbol_func("play-rand-sound", (void*)playMP3);  
+  make_func_symbol_func("play-rand-sound", (void*)playMP3);
 
   //Stop sound file
-  make_func_symbol_func("stop-rand-sound", (void*)stopAllSounds);  
+  make_func_symbol_func("stop-rand-sound", (void*)stopAllSounds);
 
   //Main music stuff
   make_func_symbol_func("play-main-music", (void*)playMainMusic);
