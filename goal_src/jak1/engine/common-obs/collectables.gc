@@ -1974,11 +1974,11 @@
     )
     ;; Increment after setting name
     (update-current-chicks (+ (get-current-chicks) 1))
-    (play-rand-sound "snd/ChickPickup1.mp3" (the int (-> *setting-control* default sfx-volume)))
+    (play-rand-sound "SND/ChickPickup1.mp3" (the int (-> *setting-control* default sfx-volume)))
     (if (= (+  (get-current-chicks)  (get-saved-chicks)) 
            (get-total-chicks)
         )
-   (play-rand-sound "snd/coin1.wav" (the int (-> *setting-control* default sfx-volume)))
+   (play-rand-sound "SND/coin1.wav" (the int (-> *setting-control* default sfx-volume)))
     )
     (if #f
 
@@ -2814,7 +2814,7 @@
     )
 
     (if (= arg1 (pickup-type eco-chicken))
-    (play-rand-sound "snd/chicken-eco-intro.mp3" (* 25 (the int (-> *setting-control* default music-volume))))
+    (play-rand-sound "SND/chicken-eco-intro.mp3" (* 25 (the int (-> *setting-control* default music-volume))))
     )
 
     
