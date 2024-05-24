@@ -269,7 +269,7 @@
 )
 (defun unlock-level-func ((idx int))
 (set-unlock-level-val idx)
-(play-rand-sound "snd/end-level.wav" (the int (-> *setting-control* default sfx-volume)))
+(play-rand-sound "SND/end-level.wav" (the int (-> *setting-control* default sfx-volume)))
 (reset-saved-chick-from-mem)
 (auto-save-command 'auto-save 0 0 *default-pool*)
 (none)
@@ -466,7 +466,7 @@ Temporary hardcoded hack so I can be sure how this works for release
                 (until (time-elapsed? current-timea (seconds 27))
                     (suspend)
                 )
-            (play-rand-sound "snd/joshsuprise.mp3" (the int 200))
+            (play-rand-sound "SND/joshsuprise.mp3" (the int 200))
             )
   (none)
 )
@@ -640,7 +640,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
   (if (and (is-in-chem-fac-silo) (not chem-bool))
   (begin
-   (play-rand-sound "snd/windy.wav" (the int (-> *setting-control* default sfx-volume)))
+   (play-rand-sound "SND/windy.wav" (the int (-> *setting-control* default sfx-volume)))
    (set! chem-bool #t)
    (until (or (not (is-in-chem-fac-silo)) (time-elapsed? current-timea (seconds 20)))
    (suspend)
@@ -653,7 +653,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 (cond
 ((and (string= *currentSpoolName* "ndi-intro") (= *currentCutsceneFrame* 420))
-   (play-rand-sound "snd/zed.mp3" (the int (-> *setting-control* default sfx-volume)))
+   (play-rand-sound "SND/zed.mp3" (the int (-> *setting-control* default sfx-volume)))
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -662,7 +662,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 )
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "sage-intro-sequence-a") (= *currentCutsceneFrame* 0))
-   (play-rand-sound "snd/fart-intro.mp3" 100)
+   (play-rand-sound "SND/fart-intro.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -670,7 +670,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 )
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "sage-intro-sequence-a") (= *currentCutsceneFrame* 2447))
-   (play-rand-sound "snd/dax/oldgreenstufftoldusnotto.mp3" 100)
+   (play-rand-sound "SND/dax/oldgreenstufftoldusnotto.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -678,7 +678,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 )
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-b") (= *currentCutsceneFrame* 555))
-   (play-rand-sound "snd/htootsgas.mp3" 100)
+   (play-rand-sound "SND/htootsgas.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -686,14 +686,14 @@ Temporary hardcoded hack so I can be sure how this works for release
 )
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-c") (= *currentCutsceneFrame* 16))
-   (play-rand-sound "snd/dax/what_are_we_doing_here.mp3" 100)
+   (play-rand-sound "SND/dax/what_are_we_doing_here.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
 )
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-c") (= *currentCutsceneFrame* 220))
-   (play-rand-sound "snd/dax/euagh_ooop.mp3" 100)
+   (play-rand-sound "SND/dax/euagh_ooop.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -702,7 +702,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 ;;375 huH
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-c") (= *currentCutsceneFrame* 375))
-   (play-rand-sound "snd/dax/stupid_precursor_gas.mp3" 100)
+   (play-rand-sound "SND/dax/stupid_precursor_gas.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -713,7 +713,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 ;;584 eek daRT TOOT
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-c") (= *currentCutsceneFrame* 584))
-   (play-rand-sound "snd/dax/what_is_that_dark_toot.mp3" 100)
+   (play-rand-sound "SND/dax/what_is_that_dark_toot.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -722,7 +722,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 ;;725 BREATH
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-c") (= *currentCutsceneFrame* 725))
-   (play-rand-sound "snd/dax/yaps_on_about.mp3" 100)
+   (play-rand-sound "SND/dax/yaps_on_about.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -730,7 +730,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 ;;1019 POWERTOOTS
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-c") (= *currentCutsceneFrame* 1019))
-   (play-rand-sound "snd/dax/power_toots.mp3" 100)
+   (play-rand-sound "SND/dax/power_toots.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -739,7 +739,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 ;;1215 how did you do that
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-c") (= *currentCutsceneFrame* 1215))
-   (play-rand-sound "snd/dax/wow_how_did_you_do_that.mp3" 100)
+   (play-rand-sound "SND/dax/wow_how_did_you_do_that.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -747,7 +747,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 ;;1340 JAK WE IN TROUBLE
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-c") (= *currentCutsceneFrame* 1340))
-   (play-rand-sound "snd/dax/i_think_were_in_trouble.mp3" 100)
+   (play-rand-sound "SND/dax/i_think_were_in_trouble.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -755,7 +755,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 ;;1627 ahhhHHH
 ((and *custom-cutscene?* (string= *currentSpoolName* "sidekick-human-intro-sequence-c") (= *currentCutsceneFrame* 1627))
-   (play-rand-sound "snd/dax/daxter_ahh.mp3" 100)
+   (play-rand-sound "SND/dax/daxter_ahh.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -763,7 +763,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "finalbosscam-white-eco") (= *currentCutsceneFrame* 52))
-   (play-rand-sound "snd/hnot_my_farts.mp3" 100)
+   (play-rand-sound "SND/hnot_my_farts.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -772,7 +772,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "finalbosscam-white-eco") (= *currentCutsceneFrame* 165))
-   (play-rand-sound "snd/htootsgas2.mp3" 100)
+   (play-rand-sound "SND/htootsgas2.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -781,7 +781,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 
 ((and *custom-cutscene?* (string= *currentSpoolName* "green-sagecage-daxter-sacrifice") (= *currentCutsceneFrame* 12))
-   (play-rand-sound "snd/dax/daxter light eco.mp3" 100)
+   (play-rand-sound "SND/dax/daxter light eco.mp3" 100)
    (until (time-elapsed? current-timea (seconds 1))
    (suspend)
    )
@@ -1023,10 +1023,10 @@ Temporary hardcoded hack so I can be sure how this works for release
     )
 
     (when (and (string= *currentSpoolName* "green-sagecage-outro-beat-boss-a") (= *currentCutsceneFrame* 2))
-    (play-rand-sound "snd/farts/fart1.mp3" (the int (-> *setting-control* default dialog-volume)))
+    (play-rand-sound "SND/farts/fart1.mp3" (the int (-> *setting-control* default dialog-volume)))
     )
     (when (and (string= *currentSpoolName* "green-sagecage-outro-beat-boss-a") (= *currentCutsceneFrame* 250))
-    (play-rand-sound "snd/farts/vinefart.mp3" (the int (-> *setting-control* default dialog-volume)))
+    (play-rand-sound "SND/farts/vinefart.mp3" (the int (-> *setting-control* default dialog-volume)))
     )
 
 

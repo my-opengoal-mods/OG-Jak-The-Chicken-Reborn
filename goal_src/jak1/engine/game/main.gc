@@ -399,7 +399,7 @@
           (cpad-clear! 0 r1)
           ;;Mort softlock backup hack
       (+! (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))current-chicks) 1)
-     (play-rand-sound "snd/chickendance.mp3" (the int (-> *setting-control* default sfx-volume)))
+     (play-rand-sound "SND/chickendance.mp3" (the int (-> *setting-control* default sfx-volume)))
         )
 
     ;; debug mode
