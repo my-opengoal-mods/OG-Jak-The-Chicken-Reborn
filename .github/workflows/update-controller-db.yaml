@@ -7,7 +7,7 @@ on:
 
 jobs:
   update-controller-db:
-    if: github.repository == 'my-opengoal-mods/OG-Jak-The-Chicken-Reborn'
+    if: github.repository == 'open-goal/jak-project'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
           wget -O ./game/assets/sdl_controller_db.txt https://raw.githubusercontent.com/gabomdq/SDL_GameControllerDB/master/gamecontrollerdb.txt
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.BOT_PAT }}
           author: 'OpenGOALBot <OpenGOALBot@users.noreply.github.com>'
