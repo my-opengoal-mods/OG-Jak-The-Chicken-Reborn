@@ -665,13 +665,11 @@
       ;; Code here runs every time jak spawns (loading a file new game or death)
 
       (init-title)
-
-
-
       (format #t  "RUNNING MUSIC PROC~%")
       (process-spawn-function process music-manager-proc)
       (restore-cells)
       (restore-saved-chicks-from-mem)
+
 
       ;;uncomment this to use custom music for custom levels - the function is in mod-common-functions.gc
       ;;(process-spawn-function process music-manager-proc)
@@ -682,7 +680,6 @@
       (case death-event
         (('dying)
           ;; Code here runs immediately every time jak dies, before any death animation or death cutscene
-
           )
         (('blackout)
           ;; Code here runs after jak dies (and any death cutscene finishes), during the blackout before he spawns
