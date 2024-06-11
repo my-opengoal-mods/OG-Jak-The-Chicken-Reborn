@@ -682,7 +682,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 ;;Loops all the chickens, and sees if they are trying to get to a position in the flock.
 ;;If so increment a counter and return it.
 ;; loop all the chickens
-(dotimes (i 20)
+(dotimes (i NUM_FLOCKPOINTS)
 
 ;;(->  (get-chick-from-flock (+! i 1)) target-pos quad)
 
@@ -1091,11 +1091,13 @@ Temporary hardcoded hack so I can be sure how this works for release
 
 
 (defun get-chick-from-flock ((idx int))
+(when *flock*
   (if (the demon-chicken (handle->process (-> *flock* chicks idx)))
-    (the demon-chicken (handle->process (-> *flock* chicks idx)))
-    (the demon-chicken #f)
+    (return (the demon-chicken (handle->process (-> *flock* chicks idx))))
+    (return (the demon-chicken #f))
     )
-
+)
+ (the demon-chicken #f)
 )
 
 
@@ -1149,6 +1151,7 @@ Temporary hardcoded hack so I can be sure how this works for release
 
                                     ;;set their target to 1,1,1
                                     (vector-identity! (-> (get-chick-from-flock i) target-pos))
+                                    (vector-identity! (-> (get-chick-from-flock i) root trans))
                                     (auto-save-command 'auto-save 0 0 *default-pool*)
     (update-saved-chicks (+ (get-saved-chicks) 1))
     (update-saved-chicks-in-mem 1)
