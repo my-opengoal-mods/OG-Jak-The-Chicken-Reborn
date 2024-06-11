@@ -1925,11 +1925,11 @@
     )
     ;; Increment after setting name
     (update-current-chicks (+ (get-current-chicks) 1))
-    (play-sound-file "custom_assets/jak1/SND/ChickPickup1.mp3" (the int (-> *setting-control* default sfx-volume)))
+    (play-sound-file "data/custom_assets/jak1/SND/ChickPickup1.mp3" (the int (-> *setting-control* default sfx-volume)))
     (if (= (+  (get-current-chicks)  (get-saved-chicks))
            (get-total-chicks)
         )
-   (play-sound-file "custom_assets/jak1/SND/coin1.wav" (the int (-> *setting-control* default sfx-volume)))
+   (play-sound-file "data/custom_assets/jak1/SND/coin1.wav" (the int (-> *setting-control* default sfx-volume)))
     )
     (if #f
 
@@ -2756,7 +2756,7 @@
     (sv-192 (pointer process))
     )
         (if (= arg1 (pickup-type eco-chicken))
-    (play-sound-file "custom_assets/jak1/SND/chicken-eco-intro.mp3" (* 25 (the int (-> *setting-control* default music-volume))))
+    (play-sound-file "data/custom_assets/jak1/SND/chicken-eco-intro.mp3" (* 25 (the int (-> *setting-control* default music-volume))))
     )
   (set! sv-32 arg5)
   (let ((s1-0 (new-stack-vector0))
