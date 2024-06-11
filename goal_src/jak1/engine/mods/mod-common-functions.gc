@@ -708,6 +708,7 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
           )
          (('space-bird)
           (play-main-music "data/custom_assets/jak1/SND/music-space-bridge.mp3" (the int (* (-> *setting-control* default music-volume) 0.75)))
+          (play-main-music "custom_assets/jak1/SND/music-glass-towers-chemical-factory.mp3" (the int (* (-> *setting-control* default music-volume) 0.75)))
           )
          (('garden)
           (play-main-music "data/custom_assets/jak1/SND/music-block-man.mp3" (the int (* (-> *setting-control* default music-volume) 0.75))) ;;FIX
