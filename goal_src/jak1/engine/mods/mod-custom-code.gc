@@ -474,7 +474,7 @@
     (defun chicken-mode-logic ()
     ;;This runs every frame and if chicken mode is on forces jak on flut and hides him etc
 
-(when chicken-mode-on?
+(when (and chicken-mode-on? (not  (= (-> (level-get-target-inside *level*)name) 'finalboss)))
 (set! flutflut? (aif *target* (case (-> it next-state name) (
                                       (
                                        'target-flut-air-attack
