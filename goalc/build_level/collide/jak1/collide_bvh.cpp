@@ -105,14 +105,21 @@ void split_along_dim(std::vector<jak1::CollideFace>& faces,
                      int dim,
                      std::vector<jak1::CollideFace>* out0,
                      std::vector<jak1::CollideFace>* out1) {
-  std::sort(faces.begin(), faces.end(),
-            [=](const jak1::CollideFace& a, const jak1::CollideFace& b) {
-              return a.bsphere[dim] < b.bsphere[dim];
-            });
-  lg::print("splitting with size: {}\n", faces.size());
-  size_t split_idx = faces.size() / 2;
-  out0->insert(out0->end(), faces.begin(), faces.begin() + split_idx);
-  out1->insert(out1->end(), faces.begin() + split_idx, faces.end());
+    static bool first_split = true;
+
+    std::sort(faces.begin(), faces.end(),
+              [=](const jak1::CollideFace& a, const jak1::CollideFace& b) {
+                  return a.bsphere[dim] < b.bsphere[dim];
+              });
+
+    if (first_split) {
+        lg::print("Some faces.size are being split rn hold on\n", faces.size());
+        first_split = false;
+    }
+
+    size_t split_idx = faces.size() / 2;
+    out0->insert(out0->end(), faces.begin(), faces.begin() + split_idx);
+    out1->insert(out1->end(), faces.begin() + split_idx, faces.end());
 }
 
 /*!

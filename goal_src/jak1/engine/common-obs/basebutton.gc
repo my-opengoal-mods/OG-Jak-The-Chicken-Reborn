@@ -11,7 +11,7 @@
 
 
 ;; DECOMP BEGINS
-(defun-extern portal-mort-gate warp-gate)
+(defun-extern portal-mort-gate process-drawable)
 (defun-extern portal-mort-trans vector)
 
 (deftype basebutton (process-drawable)
