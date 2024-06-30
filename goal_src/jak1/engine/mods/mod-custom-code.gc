@@ -516,7 +516,7 @@
 
 )
 
-(if (not flut-movement-freeze)
+(if (or (not flut-movement-freeze) (= (-> (level-get-target-inside *level*)name) 'finalboss))
 (set! (-> *flut-walk-mods* target-speed) 81920.0)
 (set! (-> *flut-walk-mods* target-speed) 0.0)
 )
