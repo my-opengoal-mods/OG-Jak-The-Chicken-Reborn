@@ -96,3 +96,4 @@ goalc-report.html
 *.db-shm
 *.db-wal
 data/*
+.vs/*
