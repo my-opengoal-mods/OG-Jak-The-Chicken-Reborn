@@ -11,6 +11,8 @@
 
 
 ;; DECOMP BEGINS
+(defun-extern portal-mort-gate warp-gate)
+(defun-extern portal-mort-trans vector)
 
 (deftype basebutton (process-drawable)
   ((root               collide-shape-moving :override)
@@ -492,6 +494,9 @@
       (set! (-> s4-0 message) 'change-state)
       (set! (-> s4-0 param 0) (the-as uint target-warp-out))
       (let ((v1-9 (new 'static 'vector)))
+                (if (portal-mort-gate)
+        (vector-copy! (-> self root trans) (portal-mort-trans))
+        )
         (set! (-> v1-9 quad) (-> self root trans quad))
         (set! (-> s4-0 param 1) (the-as uint v1-9))
         )
@@ -516,7 +521,7 @@
       (else
         (load-state-want-levels (-> self level) (-> arg1 load-name))
         (while (or (not (member (level-status *level* (-> arg1 load-name)) '(loaded active)))
-                   (not (time-elapsed? (-> self state-time) (seconds 2)))
+                   (not (time-elapsed? (-> self state-time) (seconds 0.1)))
                    )
           (suspend)
           )
