@@ -2756,7 +2756,7 @@
     (sv-192 (pointer process))
     )
         (if (= arg1 (pickup-type eco-chicken))
-    (play-sound-file "data/custom_assets/jak1/SND/chicken-eco-intro.mp3" (* 25 (the int (-> *setting-control* default music-volume))))
+    (play-sound-file "data/custom_assets/jak1/SND/chicken-eco-intro.mp3"  (the int (-> *setting-control* default dialog-volume)))
     )
   (set! sv-32 arg5)
   (let ((s1-0 (new-stack-vector0))

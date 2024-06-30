@@ -154,7 +154,7 @@
       )
     (((speedrun-category il-factory-cross))
       ;; spawn at the green sage hut warp gate
-      (initialize! *game-info* 'game (the-as game-save #f) "factory-cross-warp")
+      (initialize! *game-info* 'game (the-as game-save #f) "fac-cross-warp")
       )
     (((speedrun-category il-holly-wood))
       ;; spawn at beach
@@ -198,11 +198,11 @@
       )
     (((speedrun-category il-chemical-factory))
       ;; spawn at start of snowy
-      (initialize! *game-info* 'game (the-as game-save #f) "chemical-factory-warp")
+      (initialize! *game-info* 'game (the-as game-save #f) "chem-fac-warp")
       )
     (((speedrun-category il-space-bridge))
       ;; spawn at start of spider cave
-      (initialize! *game-info* 'game (the-as game-save #f) "space-bridge-warp")
+      (initialize! *game-info* 'game (the-as game-save #f) "space-brid-warp")
       )
     (((speedrun-category il-chicks))
       ;; spawn at start of lava tube

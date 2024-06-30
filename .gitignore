@@ -95,3 +95,4 @@ goalc-report.html
 *.opendb
 *.db-shm
 *.db-wal
+data/*

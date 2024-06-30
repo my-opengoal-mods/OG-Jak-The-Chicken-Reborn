@@ -51,9 +51,13 @@ u32 vblank_interrupt_handler = 0;
 
 Timer ee_clock_timer;
 
-ma_engine maEngine;
+
+
+std::mutex activeMusicsMutex;
 std::map<std::string, ma_sound> maSoundMap;
-ma_sound* mainMusicSound;
+std::mutex mainMusicMutex;
+ma_sound* mainMusicSound = nullptr;
+ma_engine maEngine;
 
 void kmachine_init_globals_common() {
   memset(pad_dma_buf, 0, sizeof(pad_dma_buf));
@@ -63,7 +67,7 @@ void kmachine_init_globals_common() {
   vif1_interrupt_handler = 0;
   vblank_interrupt_handler = 0;
   ee_clock_timer = Timer();
-
+  ma_engine_uninit(&maEngine);
   ma_engine_init(NULL, &maEngine);
 }
 
@@ -117,6 +121,8 @@ u64 CPadOpen(u64 cpad_info, s32 pad_number) {
   return cpad_info;
 }
 
+
+
 // Function to stop all currently playing sounds.
 void stopAllSounds() {
   for (auto& pair : maSoundMap) {
@@ -139,10 +145,7 @@ std::vector<std::string> getPlayingFileNames() {
   return playingFileNames;
 }
 
-std::mutex activeMusicsMutex;  // Mutex to synchronize access to activeMusics
 
-// Declare a mutex for synchronizing access to mainMusicInstance
-std::mutex mainMusicMutex;
 
 void playMP3_internal(u32 filePathu32, u32 volume, bool isMainMusic) {
   std::thread thread([=]() {
