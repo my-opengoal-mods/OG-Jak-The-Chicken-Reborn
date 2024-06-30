@@ -551,6 +551,7 @@
       (if  (and (= (-> (process-by-ename "robotboss-3") state name) 'robotboss-blue-wait) (!= (-> *target* state name) 'target-continue) )
         (begin
               (suspend)
+              (set! (-> *autosplit-info-jak1* res-cold-pipe) 1)
         (go-process  (process-by-ename "robotboss-3") robotboss-white-eco-movie)
         (suspend)
         )
