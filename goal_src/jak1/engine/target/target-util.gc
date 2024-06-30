@@ -728,8 +728,10 @@
        (not (logtest? (-> self water flags) (water-flags wt09)))
        )
   )
-
+(define-extern flut-movement-freeze symbol)
 (defbehavior can-jump? target ((arg0 symbol))
+
+(if flut-movement-freeze (return #f))
   (and (or (logtest? (-> self control status) (cshape-moving-flags onsurf))
            (not (time-elapsed? (-> self control unknown-dword11) (-> *TARGET-bank* ground-timeout)))
            (and (logtest? (-> self control status) (cshape-moving-flags onsurf))

@@ -1052,7 +1052,7 @@
     (if (and (= (-> self cam-user-mode) 'normal)
              (logtest? (-> self control unknown-surface00 flags) (surface-flags allow-look-around))
              (not (logtest? (-> self control root-prim prim-core action)
-                            (collide-action edgegrab-cam swingpole-active racer snowball tube flut)
+                            (collide-action edgegrab-cam swingpole-active racer snowball tube )
                             )
                   )
              (-> *setting-control* current allow-look-around)

@@ -1124,7 +1124,7 @@
   0
   (none)
   )
-
+(define-extern chicken-mode-on? symbol)
 (defstate target-death (target)
   :event (behavior ((proc process) (argc int) (message symbol) (block event-message-block))
     (case message
@@ -1290,7 +1290,9 @@
          )
        )
       (('endlessfall)
+       (if (not chicken-mode-on?)
        (sound-play "death-fall")
+       (sound-play "flut-hit"))
        (camera-change-to (the-as string cam-endlessfall) 30 #f)
        (set! (-> self control pat-ignore-mask unknown-bit) 1)
        (logclear! (-> self water flags) (water-flags wt04))

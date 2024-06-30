@@ -394,6 +394,17 @@
              )
 
     ;; cheat mode
+        (check-cheat-code (-> *cheat-temp* 5) 0
+        (up up down down left right left right x x square circle square triangle)
+          (cpad-clear! 0 r1)
+          ;;Mort softlock backup hack
+      (if chicken-mode-on?
+      (set! chicken-mode-on? #f)
+      (set! chicken-mode-on? #t)
+      )
+     (play-sound-file "data/custom_assets/jak1/SND/chickendance.mp3" (the int (-> *setting-control* default sfx-volume)))
+        )
+
     (check-cheat-code (-> *cheat-temp* 0) 0
         (up up down down left right left right x x square circle square circle)
           (cpad-clear! 0 r1)

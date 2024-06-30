@@ -469,14 +469,66 @@
 )
       (none))
 
+(define flutflut? #f)
+(define chicken-mode-on? #f)
+    (defun chicken-mode-logic ()
+    ;;This runs every frame and if chicken mode is on forces jak on flut and hides him etc
 
+(when chicken-mode-on?
+(set! flutflut? (aif *target* (case (-> it next-state name) (
+                                      (
+                                       'target-flut-air-attack
+                                       'target-flut-air-attack-hit-ground
+                                       'target-flut-clone-anim
+                                       'target-flut-death
+                                       'target-flut-double-jump
+                                       'target-flut-falling
+                                       'target-flut-get-off
+                                       'target-flut-get-off-hit-ground
+                                       'target-flut-get-off-jump
+                                       'target-flut-get-on
+                                       'target-flut-grab
+                                       'target-flut-hit
+                                       'target-flut-hit-ground
+                                       'target-flut-jump
+                                       'target-flut-running-attack
+                                       'target-flut-stance
+                                       'target-flut-start
+                                       'target-flut-walk
+                                       ;; not flutflut, but we don't need to force flutflut in these cases
+                                       'target-periscope
+                                       'target-falling
+                                       'target-clone-anim
+                                       'target-play-anim
+                                       'target-billy-game
+                                       'target-look-around
+                                       'target-fishing
+                                       ;; launcher crap
+                                       'target-launch
+                                       'target-high-jump
+                                       'target-duck-high-jump
+                                       'target-duck-high-jump-jump
+                                       'target-hit-ground) #t))))
 
+(if (and (not flutflut?) (not (and (logtest? (-> *kernel-context* prevent-from-run) (process-mask movie)) (or (= (-> *target* current-level name) 'jungle)(= (-> *target* current-level name) 'village1) )))) (send-event *target* 'change-mode 'flut #f))
+
+    (logior! (-> *target* draw status) (draw-status hidden))
+
+)
+
+(if (not flut-movement-freeze)
+(set! (-> *flut-walk-mods* target-speed) 81920.0)
+(set! (-> *flut-walk-mods* target-speed) 0.0)
+)
+
+    (none)
+    )
 
     (defun runs-every-frame ()
       ;;(increase-power-cell-by-one) This is a call to increase-power-cell-by-one defined in mod-common-functions.gc
 
        (mort-rewrite-text)
-
+      (chicken-mode-logic)
       (if *show-input-display*
         (input-display-on)
         (input-display-off)

@@ -2025,7 +2025,7 @@
                            :nickname 'bwd          ;; nickname
 
                            :packages '(training)
-                           :sound-banks '(training)
+                         ;;  :sound-banks '(training)
                            :music-bank #f
                            :ambient-sounds '()
                            :mood '*training-mood*

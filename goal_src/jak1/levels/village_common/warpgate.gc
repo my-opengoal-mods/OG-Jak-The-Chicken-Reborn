@@ -1,6 +1,7 @@
 ;; DECOMP BEGINS
 
-
+(define-extern flutflut? symbol)
+(define flut-movement-freeze #f)
 (define *count-crates* 0)
 (defun get-loaded-cell-count ()
 (set! *count-crates* 0)
@@ -175,7 +176,7 @@
                       (not (movie?))
                       (not (level-hint-displayed?))
                       (not (logtest? (-> *target* control root-prim prim-core action)
-                                     (collide-action edgegrab-cam swingpole-active racer snowball tube flut)
+                                     (collide-action edgegrab-cam swingpole-active racer snowball tube)
                                      )
                            )
                                                  (let* ((v1-16 (-> self root))
@@ -193,7 +194,7 @@
                       #f ;; invalidate the vanilla cond tree
                       (not (level-hint-displayed?))
                       (not (logtest? (-> *target* control root-prim prim-core action)
-                                     (collide-action edgegrab-cam swingpole-active racer snowball tube flut)
+                                     (collide-action edgegrab-cam swingpole-active racer snowball tube )
                                      )
                            )
                       (let* ((v1-16 (-> self root))
@@ -222,10 +223,21 @@
                      )
                    (>= (- (-> *display* base-frame-counter) (-> self state-time)) (seconds 0.1))
                    )
+          (when (not flutflut?)
           (if (and (have-all-chicks-safe) (cpad-pressed? 0 circle) (process-grab? *target*))
               (go-virtual active)
               (process-release? *target*)
               )
+          )
+
+        (when flutflut?
+          (if (and (have-all-chicks-safe) (cpad-pressed? 0 circle))
+              (begin
+
+              (go-virtual active))
+              (none)
+              )
+          )
           (if (and *cheat-mode* (cpad-pressed? 0 l3))
               (set! (-> self max-slot) 4)
               )
@@ -317,6 +329,41 @@
 ;;   arg1
 ;;   )
 
+(defun overwrite-level-name ((arg0 string))
+(cond
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "block-world")
+(return "WELCOME TO BLOCK WORLD")
+)
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "factory-cross")
+(return "FACTORY CROSS")
+)
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "holly-wood")
+(return "HOLLY WOOD")
+)
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "ice-canyon")
+(return "ICE CANYON")
+)
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "villa-cube")
+(return "VILLA CUBE")
+)
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "ice-slide")
+(return "ICE SLIDE")
+)
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "glass-toe")
+(return "GLASS TOWER")
+)
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "chem-fac")
+(return "CHEMICAL FACTORY")
+)
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "space-bird")
+(return "SPACE BRIDGE")
+)
+((string= (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) "cold-pipe")
+(return "COLD PIPE")
+)
+(else
+(symbol->string (-> (get-continue-by-name *game-info* arg0) level)))))
+
 (defun print-level-name-warpgate ((arg0 string) (arg1 font-context) (arg2 int) (arg3 int))
   (let ((s5-0 (if arg3
                   arg2
@@ -327,7 +374,7 @@
     (+! (-> arg1 origin x) (the float s5-0))
     (let ((f30-0 (- 1.0 (* 0.0033333334 (the float arg2)))))
       (print-game-text-scaled
-        (string-upcase (symbol->string (-> (get-continue-by-name *game-info* arg0) level)) *temp-string*)
+        (string-upcase (the-as string (overwrite-level-name (the-as string arg0))) *temp-string*)
         f30-0
         arg1
         (the int (* 128.0 f30-0))
@@ -342,6 +389,7 @@
 (defstate active (warp-gate)
   :virtual #t
   :enter (behavior ()
+    (set! flut-movement-freeze #t)
     (set-setting! 'allow-progress #f 0.0 0)
     (apply-settings *setting-control*)
     (sound-play "start-options")
@@ -350,17 +398,31 @@
     (none)
     )
   :trans (behavior ()
-    (when (or (and (cpad-pressed? 0 triangle)
+    (when (and (not flutflut?) (or (and (cpad-pressed? 0 triangle)
                    (>= (- (-> *display* base-frame-counter) (-> self state-time)) (seconds 0.01))
                    (process-release? *target*)
                    )
               (not *target*)
-              )
+              ))
+              (set! flut-movement-freeze #f)
       (logclear! (-> *cpad-list* cpads 0 button0-abs 0) (pad-buttons triangle))
       (logclear! (-> *cpad-list* cpads 0 button0-rel 0) (pad-buttons triangle))
       (sound-play "cursor-options")
       (go-virtual idle)
       )
+          (when (and flutflut? (or (and (cpad-pressed? 0 triangle)
+                   (>= (- (-> *display* base-frame-counter) (-> self state-time)) (seconds 0.01))
+                  ;;  (process-release? *target*)
+                   )
+              (not *target*)
+              ))
+              (set! flut-movement-freeze #f)
+      (logclear! (-> *cpad-list* cpads 0 button0-abs 0) (pad-buttons triangle))
+      (logclear! (-> *cpad-list* cpads 0 button0-rel 0) (pad-buttons triangle))
+      (sound-play "cursor-options")
+      (go-virtual idle)
+          )
+
     (when *target*
       (let* ((gp-1 (-> *target* control))
              (s4-0 (-> self root trans))
@@ -427,6 +489,7 @@
             (when (and (>= (- (-> *display* base-frame-counter) (-> self state-time)) (seconds 0.05)) (cpad-pressed? 0 circle) (have-all-chicks-safe))
               (logclear! (-> *cpad-list* cpads 0 button0-abs 0) (pad-buttons circle))
               (logclear! (-> *cpad-list* cpads 0 button0-rel 0) (pad-buttons circle))
+              (set! flut-movement-freeze #f)
               (go-virtual use gp-0 (the-as level s1-2))
               )
            )
@@ -645,7 +708,7 @@
   (let ((v1-2 (-> obj entity extra perm task)))
     (cond
       ((logtest? (-> *target* control root-prim prim-core action)
-                 (collide-action edgegrab-cam swingpole-active racer snowball tube flut)
+                 (collide-action edgegrab-cam swingpole-active racer snowball tube )
                  )
        #f
        )
