@@ -202,7 +202,7 @@
       )
     (((speedrun-category il-space-bridge))
       ;; spawn at start of spider cave
-      (initialize! *game-info* 'game (the-as game-save #f) "space-brid-warp")
+      (initialize! *game-info* 'game (the-as game-save #f) "space-bird-warp")
       )
     (((speedrun-category il-chicks))
       ;; spawn at start of lava tube
