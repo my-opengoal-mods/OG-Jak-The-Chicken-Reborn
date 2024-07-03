@@ -548,7 +548,10 @@
         (defun robo-movie-check ()
 
       (when (and (process-by-ename "robotboss-3") *target*)
-      (if  (and (= (-> (process-by-ename "robotboss-3") state name) 'robotboss-blue-wait) (!= (-> *target* state name) 'target-continue) )
+      (when  (and (= (-> (process-by-ename "robotboss-3") state name) 'robotboss-blue-wait) (!= (-> *target* state name) 'target-continue) )
+        (dotimes (i 10)
+        (suspend)
+        )
         (begin
               (suspend)
               (set! (-> *autosplit-info-jak1* res-cold-pipe) 1)
