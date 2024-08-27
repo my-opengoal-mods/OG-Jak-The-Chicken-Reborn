@@ -126,7 +126,7 @@ void stopMP3(u32 filePathu32) {
   std::string filePath = Ptr<String>(filePathu32).c()->data();
   std::cout << "Trying to stop file: " << filePath << std::endl;
 
-  auto& it = maSoundMap.find(filePath);
+  auto it = maSoundMap.find(filePath);
   if (it == maSoundMap.end()) {
     std::cerr << "Couldn't find sound to stop: " << filePath << std::endl;
   } else {
