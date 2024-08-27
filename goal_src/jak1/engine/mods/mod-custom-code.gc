@@ -238,7 +238,7 @@
    (until (time-elapsed? current-timea (seconds 0.5))
    (suspend)
    )
-   (stop-sound-file)
+   (stop-sound-file "data/custom_assets/jak1/SND/windy.wav")
    (set! chem-bool #f)
   )
   )
