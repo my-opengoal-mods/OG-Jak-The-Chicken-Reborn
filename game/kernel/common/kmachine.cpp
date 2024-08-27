@@ -165,45 +165,49 @@ std::vector<std::string> getPlayingFileNames() {
 void playMP3_internal(u32 filePathu32, u32 volume, bool isMainMusic) {
   std::thread thread([=]() {
     std::string filePath = Ptr<String>(filePathu32).c()->data();
-    std::cout << "Playing file: " << filePath << std::endl;
+    if (maSoundMap.contains(filePath)) {
+      std::cout << "File is already playing: " << filePath << std::endl;
+    } else {
+      std::cout << "Playing file: " << filePath << std::endl;
 
-    ma_result result;
-    ma_sound sound;
+      ma_result result;
+      ma_sound sound;
 
-    result = ma_sound_init_from_file(&maEngine, filePath.c_str(), 0, NULL, NULL, &sound);
-    if (result != MA_SUCCESS) {
-      std::cout << "Failed to load: " << filePath << std::endl;
-      return;
-    }
+      result = ma_sound_init_from_file(&maEngine, filePath.c_str(), 0, NULL, NULL, &sound);
+      if (result != MA_SUCCESS) {
+        std::cout << "Failed to load: " << filePath << std::endl;
+        return;
+      }
 
-    ma_sound_set_volume(&sound, ((float)volume) / 100.0);
+      ma_sound_set_volume(&sound, ((float)volume) / 100.0);
 
-    if (isMainMusic) {
-      ma_sound_set_looping(&sound, MA_TRUE);
-      mainMusicMutex.lock();
-      mainMusicSound = &sound;
-      mainMusicMutex.unlock();
-    }
+      if (isMainMusic) {
+        ma_sound_set_looping(&sound, MA_TRUE);
+        mainMusicMutex.lock();
+        mainMusicSound = &sound;
+        mainMusicMutex.unlock();
+      }
 
-    ma_sound_start(&sound);
+      ma_sound_start(&sound);
 
-    {
-      std::lock_guard<std::mutex> lock(activeMusicsMutex);
-      maSoundMap.insert(std::make_pair(filePath, sound));
-    }
+      {
+        std::lock_guard<std::mutex> lock(activeMusicsMutex);
+        maSoundMap.insert(std::make_pair(filePath, sound));
+      }
 
-    // loop until we're no longer main music, or we reach the end of non-looping sound
-    while (mainMusicSound == &sound || !ma_sound_at_end(&sound)) {
-      std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    }
+      // loop until we're no longer main music, or we reach the end of non-looping sound
+      while (mainMusicSound == &sound || !ma_sound_at_end(&sound)) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      }
 
-    ma_sound_stop(&sound);
-    ma_sound_uninit(&sound);
-    std::cout << "Finished playing file: " << filePath << std::endl;
+      ma_sound_stop(&sound);
+      ma_sound_uninit(&sound);
+      std::cout << "Finished playing file: " << filePath << std::endl;
 
-    {
-      std::lock_guard<std::mutex> lock(activeMusicsMutex);
-      maSoundMap.erase(filePath);
+      {
+        std::lock_guard<std::mutex> lock(activeMusicsMutex);
+        maSoundMap.erase(filePath);
+      }
     }
   });
 
