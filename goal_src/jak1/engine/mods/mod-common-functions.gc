@@ -508,7 +508,7 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
                 (until (time-elapsed? current-timea (seconds 27))
                     (suspend)
                 )
-            (play-sound-file "data/custom_assets/jak1/SND/joshsuprise.mp3" (the int 200))
+            (play-sound-file "joshsuprise.mp3" (the int 200))
             )
   (none)
 )
@@ -619,10 +619,10 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
     )
 
     (when (and (string= *currentSpoolName* "green-sagecage-outro-beat-boss-a") (= *currentCutsceneFrame* 2))
-    (play-sound-file "data/custom_assets/jak1/SND/farts/fart1.mp3" (the int (-> *setting-control* default dialog-volume)))
+    (play-sound-file "farts/fart1.mp3" (the int (-> *setting-control* default dialog-volume)))
     )
     (when (and (string= *currentSpoolName* "green-sagecage-outro-beat-boss-a") (= *currentCutsceneFrame* 250))
-    (play-sound-file "data/custom_assets/jak1/SND/farts/vinefart.mp3" (the int (-> *setting-control* default dialog-volume)))
+    (play-sound-file "farts/vinefart.mp3" (the int (-> *setting-control* default dialog-volume)))
     )
 
 
@@ -653,70 +653,70 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
         ;; Some of the alt sounds only play if you stay in a level for a very long time, so its nice to give them a rare chance to get a spotlight
         (case (-> (level-get-target-inside *level*) name)
          (('mort-title)
-          (play-main-music "data/custom_assets/jak1/SND/jak-chicken-theme.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "jak-chicken-theme.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
          (('block-world)
          (if (> (knuth-rand-int-range 0 15) (+ 8 5))
-          (play-main-music "data/custom_assets/jak1/SND/music-block-world2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
-          (play-main-music "data/custom_assets/jak1/SND/music-block-world.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))))
+          (play-main-music "music-block-world2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-block-world.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))))
           )
          (('factory-cross 'chicks)
-          (play-main-music "data/custom_assets/jak1/SND/music-factory-cross-chicks.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-factory-cross-chicks.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
          (('holly-wood)
           (if (> (knuth-rand-int-range 0 15) (+ 8 5))
-          (play-main-music "data/custom_assets/jak1/SND/music-holly-wood2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;;get holly wood 1?
-          (play-main-music "data/custom_assets/jak1/SND/music-holly-wood1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;;get holly wood 1?
+          (play-main-music "music-holly-wood2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;;get holly wood 1?
+          (play-main-music "music-holly-wood1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;;get holly wood 1?
           )
          )
          (('monument)
           (if (> (knuth-rand-int-range 0 15) (+ 8 5))
-          (play-main-music "data/custom_assets/jak1/SND/music-monument2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
-          (play-main-music "data/custom_assets/jak1/SND/music-monument1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-monument2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-monument1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
           ;;add alt theme? ITS SO GOOD YES
           )
          (('cathedral)
           (if (> (knuth-rand-int-range 0 15) (+ 8 5))
-          (play-main-music "data/custom_assets/jak1/SND/music-cathedral2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
-          (play-main-music "data/custom_assets/jak1/SND/music-cathedral1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-cathedral2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-cathedral1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
           )
          (('pyramid)
-          (play-main-music "data/custom_assets/jak1/SND/music-pyramid.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-pyramid.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
          (('ice-canyon 'cold-pipe)
          (if (> (knuth-rand-int-range 0 15) (+ 8 5))
-                (play-main-music "data/custom_assets/jak1/SND/music-ice-canyon2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)));;2?
-                (play-main-music "data/custom_assets/jak1/SND/music-ice-canyon-cold-pipe.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)));;2?
+                (play-main-music "music-ice-canyon2.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)));;2?
+                (play-main-music "music-ice-canyon-cold-pipe.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)));;2?
          )
          )
          (('coins)
-          (play-main-music "data/custom_assets/jak1/SND/music-coins.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-coins.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
          (('villa-cube)
-           (play-main-music "data/custom_assets/jak1/SND/music-monument1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;; monument and villa cuba share audio
+           (play-main-music "music-monument1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;; monument and villa cuba share audio
           )
          (('ice-slide)
-          (play-main-music "data/custom_assets/jak1/SND/music-ice-slide.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-ice-slide.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
          (('islands)
-          (play-main-music "data/custom_assets/jak1/SND/music-holly-wood1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;; shares track with islands
+          (play-main-music "music-holly-wood1.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;; shares track with islands
           )
          (('glass-toe 'chem-fac)
-          (play-main-music "data/custom_assets/jak1/SND/music-glass-towers-chemical-factory.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-glass-towers-chemical-factory.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
          (('space-bird)
-          (play-main-music "data/custom_assets/jak1/SND/music-space-bridge.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-space-bridge.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
          (('garden)
-          (play-main-music "data/custom_assets/jak1/SND/music-block-man.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;;FIX
+          (play-main-music "music-block-man.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT))) ;;FIX
           )
          (('block-man)
-          (play-main-music "data/custom_assets/jak1/SND/music-block-man.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-block-man.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
          (('cube-face)
-          (play-main-music "data/custom_assets/jak1/SND/music-cube-face.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
+          (play-main-music "music-cube-face.mp3" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
           )
           (else
           (play-main-music "" (the int (* (-> *setting-control* default music-volume) MUSIC_LOWER_PERCENT)))
@@ -772,7 +772,7 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
 (if (not *heard-chem-hint*)
 (begin
 (set! *heard-chem-hint* #t)
-(play-sound-file "data/custom_assets/jak1/SND/dax/daxter_for_zed.mp3" (the int (-> *setting-control* default dialog-volume)))
+(play-sound-file "dax/daxter_for_zed.mp3" (the int (-> *setting-control* default dialog-volume)))
 )
 )
 

@@ -402,7 +402,7 @@
       (set! chicken-mode-on? #f)
       (set! chicken-mode-on? #t)
       )
-     (play-sound-file "data/custom_assets/jak1/SND/chickendance.mp3" (the int (-> *setting-control* default sfx-volume)))
+     (play-sound-file "chickendance.mp3" (the int (-> *setting-control* default sfx-volume)))
         )
 
     (check-cheat-code (-> *cheat-temp* 0) 0
@@ -410,7 +410,7 @@
           (cpad-clear! 0 r1)
           ;;Mort softlock backup hack
       (+! (-> *custom-level-info* data (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*)info index) -1))current-chicks) 1)
-     (play-sound-file "data/custom_assets/jak1/SND/chickendance.mp3" (the int (-> *setting-control* default sfx-volume)))
+     (play-sound-file "chickendance.mp3" (the int (-> *setting-control* default sfx-volume)))
         )
 
 
