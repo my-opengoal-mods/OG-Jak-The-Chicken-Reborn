@@ -397,12 +397,12 @@
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf))
                                       (bucket-id subtitle))
       (draw-string-xy (string-format "Speedrunner Mode ~%~S ~%Category: ~S ~%Jak or Flut?: ~S ~%Cutscene Skips ~A"
-                                    *mod-version-text*
+                                     *pc-settings-built-sha*
                                      (enum->string speedrun-category (-> *speedrun-info* category))
                                      (if chicken-mode-on?
                                      "FLUT"
                                      "JAK"
                                      )
                                      (-> *pc-settings* skip-movies?))
-                      buf 0 (- 205 (* 8 4)) (font-color flat-yellow) (font-flags shadow kerning))))
+                      buf 0 (- 220 (* 8 5)) (font-color flat-yellow) (font-flags shadow kerning))))
   (none))
