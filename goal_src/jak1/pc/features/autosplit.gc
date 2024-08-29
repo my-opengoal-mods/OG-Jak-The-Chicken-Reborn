@@ -1,7 +1,10 @@
 ;;-*-Lisp-*-
 (in-package goal)
-
+(require "engine/game/game-info.gc")
+(require "pc/features/autosplit-h.gc")
 (define *autosplit-info-jak1* (new 'static 'autosplit-info-jak1))
+(define-extern *has-landed?* symbol)
+
 ;; Setup markers
 (charp<-string (-> *autosplit-info-jak1* end-marker) "end")
 ;; Setup Padding
@@ -242,5 +245,6 @@
 )
 
 (defun update-autosplit-jak1-new-game ()
+  (false! *has-landed?*)
   (set! (-> *autosplit-info-jak1* game-hash) (pc-get-unix-timestamp))
   (none))

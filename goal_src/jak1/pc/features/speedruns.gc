@@ -6,8 +6,9 @@
 (require "pc/pckernel-common.gc")
 (require "pc/features/autosplit-h.gc")
 
-
 (define *speedrun-info* (new 'static 'speedrun-info-jak1 :should-display? #t :needs-post-blackout-setup? #f))
+(define *has-landed?* #f)
+(define-extern *mod-version-text* string)
 
 (define *hub1-cell-list* (new 'static 'boxed-array :type game-task
   (game-task training-gimmie)
@@ -394,15 +395,21 @@
   (when (and (-> *pc-settings* speedrunner-mode?)
              (not (paused?))
              (-> *speedrun-info* should-display?))
+    ;; check if we've landed (either we're on ground/surface/water, or about to target-hit-ground)
+    (when (and *target* 
+              (or (logtest? (-> *target* control status) (cshape-moving-flags onground onsurf on-water))
+                  (= (-> *target* next-state name) 'target-hit-ground)))
+      (true! *has-landed?*))
+
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf))
                                       (bucket-id subtitle))
-      (draw-string-xy (string-format "Speedrunner Mode ~%~S ~%Category: ~S ~%Jak or Flut?: ~S ~%Cutscene Skips ~A"
+      (draw-string-xy (string-format "Speedrunner Mode ~%~S ~%Category: ~S ~%Jak or Flut?: ~S ~%Has Landed? ~A"
                                      *mod-version-text*
                                      (enum->string speedrun-category (-> *speedrun-info* category))
                                      (if chicken-mode-on?
-                                     "FLUT"
-                                     "JAK"
-                                     )
-                                     (-> *pc-settings* skip-movies?))
+                                        "FLUT"
+                                        "JAK"
+                                        )
+                                      *has-landed?*)
                       buf 0 (- 220 (* 8 5)) (font-color flat-yellow) (font-flags shadow kerning))))
   (none))
