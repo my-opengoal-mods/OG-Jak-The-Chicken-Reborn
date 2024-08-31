@@ -449,6 +449,27 @@
 
 
 
+(defun reset-chicken-targets ()
+;; wtf man just code normal please stupd hack stupid-hacks-every-frame
+(when (not (-> *speedrun-info* should-display?))
+(vector-identity! (-> *chicken-0* target-pos))
+(vector-identity! (-> *chicken-1* target-pos))
+(vector-identity! (-> *chicken-2* target-pos))
+(vector-identity! (-> *chicken-3* target-pos))
+(vector-identity! (-> *chicken-4* target-pos))
+(vector-identity! (-> *chicken-5* target-pos))
+(vector-identity! (-> *chicken-6* target-pos))
+(vector-identity! (-> *chicken-7* target-pos))
+(vector-identity! (-> *chicken-8* target-pos))
+(vector-identity! (-> *chicken-9* target-pos))
+(vector-identity! (-> *chicken-10* target-pos))
+(vector-identity! (-> *chicken-11* target-pos))
+
+)
+(format #t "RESETING CHICKEN TARGETS")
+(none)
+)
+
 
 (defun restore-cells ()
 
@@ -456,6 +477,7 @@
 (dotimes (i (get-current-chicks))
 (set-or-clear-status! (the entity-actor (entity-by-name (-> (get-chick-from-flock i) parent-cell-name))) (entity-perm-status dead) #f)
 )
+(reset-chicken-targets)
 
 
 ;;Clear the flock to 0

@@ -243,8 +243,9 @@
 
 
 )
-
+(defun-extern reset-chicken-targets none)
 (defun update-autosplit-jak1-new-game ()
   (false! *has-landed?*)
+  (reset-chicken-targets)
   (set! (-> *autosplit-info-jak1* game-hash) (pc-get-unix-timestamp))
   (none))

@@ -97,3 +97,4 @@ goalc-report.html
 *.db-wal
 data/*
 .vs/*
+third-party/fmt/*
