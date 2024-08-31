@@ -1819,7 +1819,8 @@
                       (speedrun-start-full-game-run))
                     ;; start the game normally
                     (else
-                      (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
+                    (set! *in-mort-menu* #t)
+                      (initialize! *game-info* 'game (the-as game-save #f) "mort-title-start")
                       (set! (-> *setting-control* default auto-save) gp-1)))
                   )
                 (set-master-mode 'game)
