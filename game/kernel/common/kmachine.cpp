@@ -5,6 +5,7 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
+#include <list>
 
 #define MINIAUDIO_IMPLEMENTATION
 // NOTE - this is needed, because on macOS, there is a file called `MacTypes.h`
