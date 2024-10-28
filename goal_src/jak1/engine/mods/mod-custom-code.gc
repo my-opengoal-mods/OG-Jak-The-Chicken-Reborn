@@ -606,12 +606,87 @@
     )
 
 
-;;Hack to rotat the warpgate this one is extra weird the math on this is wrong but the idea is close enough, might not work in coins??
-  (if (and  (entity-by-name "project-training-part-1") (!= (-> *part-id-table* 765  init-specs 2 initial-valuef) (meters (string->float (the string (res-lump-struct (entity-by-name "project-training-part-1") 'game_task structure))
-  ))))
-       (set! (-> *part-id-table* 765  init-specs 2 initial-valuef) (meters (string->float (the string (res-lump-struct (entity-by-name "project-training-part-1") 'game_task structure))))
-     )
+#| portal particle rotate hack
+(entity-by-name "project-training-part-1")
+(-> *part-id-table* 765  init-specs 2 initial-valuef)
+(meters (string->float (the string (res-lump-struct (entity-by-name "project-training-part-1") 'game_task structure))))
+
+1. print the value on the portal
+2. when a button is held, then listen for l1/r1 to increase decrease the value
+3. hopefully when it looks good you just read the value off the portal??
+
+(defpart 765
+  :init-specs ((:texture (new 'static 'texture-id :page #x2))
+    (:num 1.0)
+    (:x (meters -0.6666667))
+    (:y (meters 4))
+    (:z (meters 2.4))
+    (:scale-x (meters 1.1) (meters 0.6))
+    (:rot-z (degrees 0) (degrees 360))
+    (:scale-y :copy scale-x)
+    (:r 0.0 32.0)
+    (:g 0.0 32.0)
+    (:b 64.0 64.0)
+    (:a 8.0 32.0)
+    (:omega 0.0 65536.0)
+    (:vel-x (meters -0.0044444446))
+    (:vel-z (meters -0.0034999999))
+    (:rotvel-z (degrees 0) (degrees 1.2))
+    (:fade-a 0.21333334)
+    (:accel-x (meters 0.0010370371))
+    (:timer (seconds 2.3))
+    (:flags (bit2 bit3 bit7 bit14))
+    )
   )
+
+|#
+
+(when  (and (entity-by-name "project-training-part-1") (not (cpad-hold? 0 l1)))
+  (let ((bucket (bucket-id debug-no-zbuf))
+        (root (-> (the-as training-part (process-by-ename "project-training-part-1") )root trans))
+        (yellow (font-color yellow))
+        )
+    (add-debug-x #t bucket root (static-rgba #x80 #xff #x80 #x80))
+    (add-debug-text-3d #t
+                      bucket
+                      (string-format "THIS IS THE VALUE ~F~%" (/ (-> *part-id-table* 765  init-specs 2 initial-valuef) (meters 1)))
+                      root
+                      yellow
+                      (the vector2h #f))
+    )
+)
+(when (and (entity-by-name "project-training-part-1")  (cpad-hold? 0 l1))
+ (let ((bucket (bucket-id debug-no-zbuf))
+        (root (-> (the-as training-part (process-by-ename "project-training-part-1") )root trans))
+        (yellow (font-color green))
+        )
+    (add-debug-x #t bucket root (static-rgba #x80 #xff #x80 #x80))
+    (add-debug-text-3d #t
+                      bucket
+                      (string-format "THIS IS THE VALUE ~F~%" (/ (-> *part-id-table* 765  init-specs 2 initial-valuef) (meters 1)))
+                      root
+                      yellow
+                      (the vector2h #f))
+    )
+
+(if (cpad-hold? 0 right)
+(set! (-> *part-id-table* 765  init-specs 2 initial-valuef) (+ (-> *part-id-table* 765  init-specs 2 initial-valuef) (meters 0.01)))
+)
+
+(if (cpad-hold? 0 left)
+(set! (-> *part-id-table* 765  init-specs 2 initial-valuef) (- (-> *part-id-table* 765  init-specs 2 initial-valuef) (meters 0.01)))
+)
+)
+(none)
+
+
+
+;;Hack to rotat the warpgate this one is extra weird the math on this is wrong but the idea is close enough, might not work in coins??
+  ;; (if (and  (entity-by-name "project-training-part-1") (!= (-> *part-id-table* 765  init-specs 2 initial-valuef) (meters (string->float (the string (res-lump-struct (entity-by-name "project-training-part-1") 'game_task structure))
+  ;; ))))
+  ;;      (set! (-> *part-id-table* 765  init-specs 2 initial-valuef) (meters (string->float (the string (res-lump-struct (entity-by-name "project-training-part-1") 'game_task structure))))
+  ;;    )
+  ;; )
 
 
 
