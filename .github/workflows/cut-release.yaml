@@ -19,7 +19,7 @@ permissions:
 jobs:
   cut_release:
     name: "Cut Release"
-    uses: open-goal/mod-bundling-tools/.github/workflows/mod-bundler.yml@v1
+    uses: OpenGOAL-Mods/legacy-mod-bundling-tools/.github/workflows/mod-bundler.yml@v1
     with:
       semverBump: ${{ inputs.bump }}
       metadataName: "Jak the CHICKEN"
