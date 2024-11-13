@@ -649,6 +649,10 @@
     (((pickup-type star))
      ;; get money.
      (when (< 0.0 amount)
+       (#when PC_PORT
+        ;; make sure any speedrun display is hidden
+        (hide-speedrun-display)
+        )
        ;; play sound.
        ;;hack
        (set! amount 5.0)
@@ -667,13 +671,15 @@
                     (>= (the-as uint 1) (the-as uint s4-2))
                     )
                 )
-           ;; og:preserve-this
-           (#when PC_PORT
+           (set-time! (-> this fuel-cell-pickup-time))
+           )
+        ;; og:preserve-this
+        (#when PC_PORT
+          (when (nonzero? amount)
             ;; make sure any speedrun display is hidden
             (hide-speedrun-display)
             )
-           (set-time! (-> this fuel-cell-pickup-time))
-           )
+          )
        )
      (adjust (-> (the-as target (-> this process)) game) 'fuel-cell amount source-handle)
      )

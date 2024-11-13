@@ -11,6 +11,7 @@
 
 
 ;; DECOMP BEGINS
+(define-extern *has-landed?* symbol)
 (defun-extern portal-mort-gate process-drawable)
 (defun-extern portal-mort-trans vector)
 
@@ -707,6 +708,8 @@
               )
             (let ((gp-2 (vector-! (new-stack-vector0) (-> self control unknown-vector102) (-> self control trans))))
               (set! (-> gp-2 y) 0.0)
+              ;; MORT - reset speedrun verification text (for IL submissions from full runs)
+              (when (-> *pc-settings* speedrunner-mode?) (false! *has-landed?*))
               (send-event *target* 'sidekick #f)
               (when (and (or (< (vector-dot gp-2 (-> self control transv)) 0.0) (-> self control unknown-spoolanim00))
                          (time-elapsed? (-> self state-time) (seconds 0.05))
