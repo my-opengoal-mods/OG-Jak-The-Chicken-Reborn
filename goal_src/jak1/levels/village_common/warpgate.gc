@@ -95,7 +95,8 @@
       (set-time! (-> self state-time))
       (loop
         ;;This condition is what lets the press circle to use appear for the warp-gate.
-        (add-debug-sphere #t (bucket-id debug-no-zbuf) (-> self root trans) (meters 1.0) *color-black*)
+        (add-debug-sphere #t (bucket-id debug-no-zbuf) (-> self root trans) (meters 0.3) *color-black*)
+        (get-chicken-initial-return-point)
         (when (and (and *target* (>= 20480.0 (vector-vector-distance (-> self root trans) (-> *target* control trans))))
                    (and ;;(>= (-> self level-slot) 0)
                      (not (movie?))

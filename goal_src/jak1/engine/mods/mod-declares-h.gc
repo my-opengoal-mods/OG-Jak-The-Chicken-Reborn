@@ -43,3 +43,9 @@
 
 (defun-extern portal-mort-trans vector)
 
+(defun-extern draw-origin-sphere-text vector string none)
+
+(defun-extern run-mort-code? basic)
+
+(define-extern done-init? symbol)
+(defun-extern get-chicken-initial-return-point vector)

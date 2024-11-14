@@ -287,6 +287,12 @@
                        (the-as vector2h #f)))
   (none))
 
+(defun draw-origin-sphere-text ((pos vector) (name string))
+  (when *show-debug*
+    (add-debug-sphere #t (bucket-id debug-no-zbuf) pos (meters 0.1) *color-orange*)
+    (add-debug-text-3d #t (bucket-id debug-no-zbuf) (string-format "~S" name) pos (font-color red) (the-as vector2h #f)))
+  (none))
+
 (defun adjust-chick-origin ((mmark vector))
   (draw-origin)
   (let ((xchange 0.0)
@@ -343,7 +349,8 @@
                   (get-saved-chicks-from-mem))
           (update-saved-chicks (get-saved-chicks-from-mem))))))
   ;; Set the chick with the highest index as this cell
-  (set! (-> (get-chick-from-flock (the int (get-current-chicks))) parent-cell-name) (the string (-> self name)))
+  (set! (-> (get-chick-from-flock (the int (- (get-current-chicks) 1))) substate) 'following)
+  (set! (-> (get-chick-from-flock (the int (- (get-current-chicks) 2))) parent-cell-name) (the string (-> self name)))
   ;; Increment after setting name
   (update-current-chicks (+ (get-current-chicks) 1))
   (play-sound-file "ChickPickup1.mp3" (the int (-> *setting-control* default sfx-volume)))
@@ -617,7 +624,6 @@ Then at the end of this function it checks some conditions and returns #t or #f 
       (play-sound-file "farts/vinefart.mp3" (the int (-> *setting-control* default dialog-volume))))
     ;; (sound-manager)
     (when (run-mort-code?)
-
       (if (and (= (-> *flock-points* points 1 x) 0.0)
                (!= (-> *target* state name) 'target-warp-out)
                (!= (-> *target* state name) 'target-continue)
@@ -883,6 +889,7 @@ Then at the end of this function it checks some conditions and returns #t or #f 
     music-manager-proc)
   (restore-cells)
   (restore-saved-chicks-from-mem)
+  (if (portal-mort-switch) (go-virtual-process (portal-mort-switch) basebutton-going-down))
   ;;uncomment this to use custom music for custom levels - the function is in mod-common-functions.gc
   ;;(process-spawn-function process music-manager-proc)
   (none))

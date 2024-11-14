@@ -2,11 +2,12 @@
   ((chicks handle NUM_FLOCKPOINTS :offset-assert 0)))
 
 (define *flock* (new 'static 'flock))
+(define *stupid-flock* (new 'static 'flock))
 
-(deftype flock-pos (structure)
+(deftype flock-points (structure)
   ((points vector NUM_FLOCKPOINTS :inline :offset-assert 0)))
 
-(define *flock-points* (new 'static 'flock-pos))
+(define *flock-points* (new 'static 'flock-points))
 
 (deftype demon-chicken (process-drawable)
   ((cshape           collide-shape-moving :offset 112)
@@ -20,7 +21,8 @@
    (traj-time        float)
    (grace-period     time-frame)
    (to-point-speed   float)
-   (parent-cell-name string))
+   (parent-cell-name string)
+   (substate         symbol))
   (:methods
    (init-collision! (_type_) none)
    (init-skel! (_type_) none)
@@ -92,6 +94,7 @@
   (set! (-> this traj-time) 1.0)
   (set! (-> this grace-period) (seconds 0))
   (set! (-> this to-point-speed) 6.0)
+  (set! (-> this substate) 'uncollected)
   ;;(set! (-> this part) (create-launch-control (-> *part-group-id-table* 800) this))
   (none))
 
@@ -109,11 +112,14 @@
   (none))
 
 (defbehavior demon-chicken-follow-trajectory demon-chicken ((time float))
+;; make chickens run back and forth when idle
+     (when (> (vector-vector-distance (-> self root trans) (-> self target-pos)) (meters 0.5))
   (let ((traj (-> self trajectory)))
     (eval-position! traj time (-> self cshape trans))
     (eval-velocity! traj time (-> self cshape transv)))
   (vector-normalize-copy! (-> self dir) (-> self cshape transv) 1.0)
   (forward-up->quaternion (-> self cshape quat) (-> self dir) *up-vector*)
+     )
   (none))
 
 (defbehavior send-attack! demon-chicken ((proc process) (tshapes touching-shapes-entry))
@@ -288,6 +294,8 @@
       (ja-channel-push! 1 (seconds 0.2))
       (ja :group! flut-saddle-flut-run-ja :num! min)
       (loop
+
+
         ;;(spawn (-> self part) (the vector (-> self cshape root-prim prim-core))) ;; fire rings
         ;; set up trajectory to follow target
         ;;hack doesnt work(set! (-> self traj-time) 1.0)
@@ -317,6 +325,16 @@
       (if (not (should-chase? self)) (go demon-chicken-dormant))
       (none))
   :post demon-chicken-chase-post)
+
+(defun update-chicken-substate ((chicken demon-chicken) (state symbol))
+  (when (run-mort-code?)
+    (case state
+      (('following) (vector-copy! (-> chicken target-pos) (-> *target* root trans)) (set! (-> chicken substate) 'following))
+      (('waiting-to-return) (set! (-> chicken substate) 'waiting-to-return))
+      (('moving-to-portal) (set! (-> chicken substate) 'moving-to-portal))
+      (('uncollected) (set! (-> chicken substate) 'uncollected))
+      (else (play-sound-file "codemistake.mp3" 3000))))
+  #t)
 
 (defun target-pos-with-offset ()
   (let ((vec (new-stack-vector0))
@@ -447,11 +465,14 @@
   (the int (-> *game-info* money-per-level 5)))
 
 (defun get-chick-from-flock ((idx int))
+  (set! idx (- idx 1))
+  (string-format #t "CHICK FROM FLOCK ~I" idx)
   (when *flock*
     (if (the demon-chicken (handle->process (-> *flock* chicks idx)))
       (return (the demon-chicken (handle->process (-> *flock* chicks idx))))
       (return (the demon-chicken #f))))
   (the demon-chicken #f))
+
 
 (defun draw-beta-flock-points ()
   ;;beta function to draw spheres assiend my set-flock-points
@@ -473,10 +494,33 @@
   (none))
 
 (defun get-current-chicks ()
-  (-> *custom-level-info*
-      data
-      (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))
-      current-chicks))
+  (when done-init?
+    (let* ((current-chick-num 0))
+      (dotimes (i NUM_FLOCKPOINTS)
+        (when (and (get-chick-from-flock i) (= (-> (get-chick-from-flock i) substate) 'following) (+! current-chick-num 1))))
+      (return current-chick-num)))
+  0)
+
+(defun get-waiting-chicks ()
+  (when done-init?
+    (let* ((current-chick-num 0))
+      (dotimes (i NUM_FLOCKPOINTS)
+        (when (and (get-chick-from-flock i) (= (-> (get-chick-from-flock i) substate) 'waiting-to-return) (+! current-chick-num 1))))
+      (return current-chick-num)))
+  0)
+
+(defun get-chicks-going-to-portal ()
+  (when done-init?
+    (let* ((current-chick-num 0))
+      (dotimes (i NUM_FLOCKPOINTS)
+        (when (and (get-chick-from-flock i) (= (-> (get-chick-from-flock i) substate) 'going-to-portal) (+! current-chick-num 1))))
+      (return current-chick-num)))
+  0)
+
+;; (-> *custom-level-info*
+;;     data
+;;     (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))
+;;     current-chicks))
 
 (defun get-saved-chicks ()
   (-> *custom-level-info*
@@ -564,43 +608,44 @@
 (defun mort-rewrite-text ()
   ;;mort debugging
   ;; this is a debug checking text to see certain values
-  (when (and (portal-mort-switch) (!= (-> (level-get-target-inside *level*) name) 'mort-title))
-    (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf))
-                                 (bucket-id subtitle)
-                                 (or *debug-segment* (and (not *debug-segment*) (= (the int (-> *setting-control* default sfx-volume) 1)))))
-      (draw-string-xy (string-format "Will Remove soon!~%Mort Rewrite info ~%Chicks in memory card: ~D ~%Total Chicks is is ~D~%Current Chicks is is ~D~%saved Chicks is is ~D~%Chicken going to portal? ~A~%Unlock lvl is ~D~%"
-                                     (get-saved-chicks-from-mem)
-                                     (get-total-chicks)
-                                     (get-current-chicks)
-                                     (get-saved-chicks)
-                                     (-> *target* next-state name)
-                                     (get-unlock-level))
-                      buf
-                      (- 400 70)
-                      (- 150 (* 8 16))
-                      (font-color flat-yellow)
-                      (font-flags shadow kerning))))
+  ;; (when (and (portal-mort-switch) (!= (-> (level-get-target-inside *level*) name) 'mort-title))
+  ;;   (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf))
+  ;;                                (bucket-id subtitle)
+  ;;                                (or *debug-segment* (and (not *debug-segment*) (= (the int (-> *setting-control* default sfx-volume) 1)))))
+  ;;     (draw-string-xy (string-format "Will Remove soon!~%Mort Rewrite info ~%Chicks in memory card: ~D ~%Total Chicks is is ~D~%Current Chicks is is ~D~%saved Chicks is is ~D~%Chicken going to portal? ~A~%Unlock lvl is ~D~%"
+  ;;                                    (get-saved-chicks-from-mem)
+  ;;                                    (get-total-chicks)
+  ;;                                    (get-current-chicks)
+  ;;                                    (get-saved-chicks)
+  ;;                                    (-> (get-chick-from-flock 1) substate)
+  ;;                                    (get-unlock-level))
+  ;;                     buf
+  ;;                     (- 400 270)
+  ;;                     (- 150 (* 8 16))
+  ;;                     (font-color flat-yellow)
+  ;;                     (font-flags shadow kerning))))
   (none))
 
 (defun assign-remove-demon-chicken-target ()
   (dotimes (i (get-current-chicks))
     ;;(format #t "~D" i)
-    (set! (-> (get-chick-from-flock i) target-pos quad) (-> *flock-points* points i quad))
-    ;; Once we warp the chick out restore its "fast" speed
-    (set! (-> (get-chick-from-flock i) to-point-speed) 6.0)
-    (when *show-debug*
-      (add-debug-text-3d #t
-                         (bucket-id debug-no-zbuf)
-                         (string-format "~D" i)
-                         (-> (get-chick-from-flock i) target-pos)
-                         (font-color green)
-                         (the-as vector2h #f))
-      (add-debug-text-3d #t
-                         (bucket-id debug-no-zbuf)
-                         (string-format "~S" (-> (get-chick-from-flock i) parent-cell-name))
-                         (-> (get-chick-from-flock i) target-pos)
-                         (font-color green)
-                         (the-as vector2h #f)))))
+    (when (= (-> (get-chick-from-flock i) substate) 'following)
+      (set! (-> (get-chick-from-flock i) target-pos quad) (-> *flock-points* points i quad))
+      ;; Once we warp the chick out restore its "fast" speed
+      (set! (-> (get-chick-from-flock i) to-point-speed) 6.0)
+      (when *show-debug*
+        (add-debug-text-3d #t
+                           (bucket-id debug-no-zbuf)
+                           (string-format "~D" i)
+                           (-> (get-chick-from-flock i) target-pos)
+                           (font-color green)
+                           (the-as vector2h #f))
+        (add-debug-text-3d #t
+                           (bucket-id debug-no-zbuf)
+                           (string-format "~S" (-> (get-chick-from-flock i) parent-cell-name))
+                           (-> (get-chick-from-flock i) target-pos)
+                           (font-color green)
+                           (the-as vector2h #f))))))
 
 ;;TWO FUNCTION??
 (defun update-saved-chicks ((amount int))
@@ -628,16 +673,34 @@
   (let* ((current-level-idx (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1)))
          (current-custom-info (-> *custom-level-info* data current-level-idx))
          (warpgate-pos (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans)))
-    (when (and *close-to-portal?* (> (-> current-custom-info current-chicks) 0))
+    (when (and *close-to-portal?* (> (get-current-chicks) 0))
       ;;Remove a chick that is following, and incrment saved chick for the level. This should be moved to when the chicken uses portal imo
-      (set! (-> current-custom-info current-chicks) (- (-> current-custom-info current-chicks) 1))
+      ;;(set! (-> (get-chick-from-flock (get-current-chicks)) substate) 'moving-to-portal)
+      ;; (vector-copy! (-> (get-chick-from-idx-1 (the int (get-current-chicks))) root trans) (get-chicken-initial-return-point))
+      ;;       (vector-copy! (-> (get-chick-from-idx-1 (the int (get-current-chicks))) target-pos) warpgate-pos)
+      (set! (-> (get-chick-from-flock (the int (get-current-chicks))) to-point-speed) 3.0)
+      (dotimes (i (get-current-chicks))
+        (update-chicken-substate (get-chick-from-flock (get-current-chicks)) 'waiting-to-return))
+      (dotimes (i (get-waiting-chicks))
+        (vector-copy! (-> (get-chick-from-flock (+ i 0)) target-pos) (get-chicken-initial-return-point))
+        (vector-copy! (-> (get-chick-from-flock (+ i 0)) root trans) (get-chicken-initial-return-point)))
       ;;We add 1 here, because we removed it above. Will need to adjust when it goes down on warp
-      (vector-copy! (-> (get-chick-from-flock (the int (-> current-custom-info current-chicks))) target-pos) warpgate-pos)
-      (set! (-> (get-chick-from-flock (the int (-> current-custom-info current-chicks))) to-point-speed) 3.0)
-      (let ((current-timea (current-time)))
-        (until (time-elapsed? current-timea (seconds 0.35))
-          ;;(format #t "~S~%" "NOT ELAPSED")
-          (suspend)))))
+      (update-chicken-substate (get-chick-from-flock (get-waiting-chicks)) 'moving-to-portal)
+      (dotimes (i (get-waiting-chicks))
+        (update-chicken-substate (get-chick-from-flock (get-waiting-chicks)) 'going-to-portal)
+        (let ((current-timea (current-time)))
+          (until (time-elapsed? current-timea (seconds 0.35))
+            ;;(format #t "~S~%" "NOT ELAPSED")
+            (suspend))
+            )
+
+            (vector-copy! (-> (get-chick-from-flock (the int (+ 0 (get-current-chicks)))) root trans) (get-chicken-initial-return-point))
+             (vector-copy! (-> (get-chick-from-flock (the int (+ 0 (get-current-chicks)))) target-pos) warpgate-pos)
+
+
+            )
+
+            ))
   (none))
 
 (defun warp-demon-chick ()
@@ -662,7 +725,42 @@
           (begin
             (set-unlock-level)
             ;; (reset-actors #t) ;;HACK for some reason, the warp gate doesnt let us use it after coming out of it but reseting actor fixes this.
-            ))))
+            ))
+        (update-chicken-substate (get-chick-from-flock i) 'uncollected)))
     ;; (-> (the-as training-part (process-by-ename "project-training-part-1") )root trans)  )
     )
   (none))
+
+(defun get-chicken-initial-return-point ()
+  (let* ((warpgate-pos (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans)) ;; point A
+         (target-pos (-> *target* root trans)) ;; point B
+         (circle-radius (meters 5.0)) ;; desired distance from warpgate-pos
+         (vector-AB (new 'static 'vector)) ;; vector from A to B (ignoring y)
+         (normalized-AB (new 'static 'vector)) ;; normalized direction vector
+         (final-point (new 'static 'vector)) ;; final point on the circle
+         (magnitude 0.0))
+    ;; Calculate vector AB by subtracting warpgate-pos from target-pos (ignoring y)
+    (set! (-> vector-AB x) (- (-> target-pos x) (-> warpgate-pos x)))
+    (set! (-> vector-AB z) (- (-> target-pos z) (-> warpgate-pos z)))
+    (set! (-> vector-AB y) 0.0) ;; Ignore y component for direction
+    ;; Draw initial points for reference
+    (draw-origin-sphere-text warpgate-pos "warpgate/vector A")
+    (draw-origin-sphere-text target-pos "target/vector B")
+    (draw-origin-sphere-text vector-AB "Vector AB (ignoring y)")
+    ;; Normalize vector AB to get a unit direction vector
+    (set! magnitude (sqrtf (+ (* (-> vector-AB x) (-> vector-AB x)) (* (-> vector-AB z) (-> vector-AB z)))))
+    (when (> magnitude 0.0)
+      (set! (-> normalized-AB x) (/ (-> vector-AB x) magnitude))
+      (set! (-> normalized-AB z) (/ (-> vector-AB z) magnitude)))
+    ;; Scale the normalized direction vector by the circle radius
+    (set! (-> normalized-AB x) (* (-> normalized-AB x) circle-radius))
+    (set! (-> normalized-AB z) (* (-> normalized-AB z) circle-radius))
+    ;; Calculate the final point by adding the scaled vector to warpgate-pos
+    (set! (-> final-point x) (+ (-> warpgate-pos x) (-> normalized-AB x)))
+    (set! (-> final-point z) (+ (-> warpgate-pos z) (-> normalized-AB z)))
+    ;; Set y-coordinate to match the warpgate y-coordinate
+    (set! (-> final-point y) (-> warpgate-pos y))
+    ;; Draw the final point at the specified distance from warpgate-pos
+    (draw-origin-sphere-text final-point "Point on Circle Radius (ignoring y)")
+    (return final-point))
+  (the-as vector #f))
