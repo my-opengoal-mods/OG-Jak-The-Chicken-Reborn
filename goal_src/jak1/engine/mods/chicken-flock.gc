@@ -617,7 +617,7 @@
 ;;   dst)
 
 (defun get-saved-chicks ()
-  (if (not (>= (-> *game-info* blackout-time) (current-time)))
+  (if #t;;(not (>= (-> *game-info* blackout-time) (current-time)))
     (-> *custom-level-info*
         data
         (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))
@@ -636,33 +636,62 @@
 (defun get-chicken-initial-return-point ()
   (let* ((warpgate-pos (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans)) ;; point A
          (target-pos (-> *target* root trans)) ;; point B
-         (circle-radius (meters 7.5)) ;; desired distance from warpgate-pos
+         (circle-radius (meters 7.5)) ;; desired distance from (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans)
          (vector-AB (new 'static 'vector)) ;; vector from A to B (ignoring y)
          (normalized-AB (new 'static 'vector)) ;; normalized direction vector
          (final-point (new 'static 'vector)) ;; final point on the circle
          (magnitude 0.0))
-    ;; Calculate vector AB by subtracting warpgate-pos from target-pos (ignoring y)
-    (set! (-> vector-AB x) (- (-> target-pos x) (-> warpgate-pos x)))
-    (set! (-> vector-AB z) (- (-> target-pos z) (-> warpgate-pos z)))
+    ;; Debug: Print initial positions
+    ;;(format #t (string-format "Warpgate position: ~%" (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans)))
+    ;;(inspect (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans))
+    ;;(format #t (string-format "Target position: ~%" (-> *target* root trans)))
+    ;;(inspect (-> *target* root trans))
+    ;; Calculate vector AB by subtracting (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans) from (-> *target* root trans) (ignoring y)
+    (set! (-> vector-AB x)
+          (- (-> (-> *target* root trans) x)
+             (-> (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans) x)))
+    (set! (-> vector-AB z)
+          (- (-> (-> *target* root trans) z)
+             (-> (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans) z)))
     (set! (-> vector-AB y) 0.0) ;; Ignore y component for direction
-    ;; Draw initial points for reference
-    (draw-origin-sphere-text warpgate-pos "warpgate/vector A")
-    (draw-origin-sphere-text target-pos "target/vector B")
-    (draw-origin-sphere-text vector-AB "Vector AB (ignoring y)")
+    ;; Debug: Print vector AB
+    ;;(format #t (string-format "Vector AB (ignoring y): ~%" vector-AB))
+    ;;(inspect vector-AB)
     ;; Normalize vector AB to get a unit direction vector
     (set! magnitude (sqrtf (+ (* (-> vector-AB x) (-> vector-AB x)) (* (-> vector-AB z) (-> vector-AB z)))))
+    ;;(format #t (string-format "Magnitude of Vector AB: ~F~%" magnitude))
+    (if (= magnitude 0.0)
+      (return (vector+! (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans)
+                        (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans)
+                        (vector-identity! (new-stack-vector0)))))
     (when (> magnitude 0.0)
       (set! (-> normalized-AB x) (/ (-> vector-AB x) magnitude))
       (set! (-> normalized-AB z) (/ (-> vector-AB z) magnitude)))
+    ;; Debug: Print normalized vector
+    ;;(format #t (string-format "Normalized Vector AB: ~%" normalized-AB))
+    ;;(inspect normalized-AB)
     ;; Scale the normalized direction vector by the circle radius
     (set! (-> normalized-AB x) (* (-> normalized-AB x) circle-radius))
     (set! (-> normalized-AB z) (* (-> normalized-AB z) circle-radius))
-    ;; Calculate the final point by adding the scaled vector to warpgate-pos
-    (set! (-> final-point x) (+ (-> warpgate-pos x) (-> normalized-AB x)))
-    (set! (-> final-point z) (+ (-> warpgate-pos z) (-> normalized-AB z)))
+    ;; Debug: Print scaled vector
+    ;;(format #t (string-format "Scaled Normalized Vector AB: ~%" normalized-AB))
+    ;;(inspect normalized-AB)
+    ;; Calculate the final point by adding the scaled vector to (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans)
+    (set! (-> final-point x)
+          (+ (-> (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans) x) (-> normalized-AB x)))
+    (set! (-> final-point z)
+          (+ (-> (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans) z) (-> normalized-AB z)))
     ;; Set y-coordinate to match the warpgate y-coordinate
-    (set! (-> final-point y) (-> warpgate-pos y))
-    ;; Draw the final point at the specified distance from warpgate-pos
+    (set! (-> final-point y) (-> (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans) y))
+    ;; Debug: Print final point
+    ;;(format #t (string-format "Final Point on Circle Radius: ~%" final-point))
+    ;;(inspect final-point)
+    ;;(format #t (string-format "~%~%~%" final-point))
+    ;; Draw spheres for visual debugging
+    (draw-origin-sphere-text (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans)
+                             "warpgate/vector A")
+    (draw-origin-sphere-text (-> *target* root trans) "target/vector B")
+    (draw-origin-sphere-text vector-AB "Vector AB (ignoring y)")
     (draw-origin-sphere-text final-point "Point on Circle Radius (ignoring y)")
     (return final-point))
   (the-as vector #f))
@@ -776,12 +805,31 @@
                            (the-as vector2h #f))))))
 
 ;;TWO FUNCTION??
+
 (defun update-saved-chicks ((amount int))
   (set! (-> *custom-level-info*
             data
             (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))
             saved-chicks)
         amount)
+  (suspend)
+  (none))
+
+(defun update-saved-chicks-name-print ((amount int) (name string))
+  (format #t (string-format "~S Was SAVED :D ~%" name))
+  (set! (-> *custom-level-info*
+            data
+            (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))
+            saved-chicks)
+        amount)
+  (suspend)
+  (format #t
+          (string-format "SAVED CHIKEN IS  ~D~%"
+                         (-> *custom-level-info*
+                             data
+                             (-> *level-task-data-remap* (+ (-> (level-get-target-inside *level*) info index) -1))
+                             saved-chicks)
+                         name))
   (none))
 
 (defun update-saved-chicks-in-mem ((arg1 int))
@@ -831,6 +879,7 @@
                     (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans))
       (if (-> *pc-settings* speedrunner-mode?)
         (vector-copy! (-> (get-chick-with-state 'waiting-to-return) root trans) (get-chicken-initial-return-point)))
+      ;;(begin (inspect (get-chicken-initial-return-point)) (vector-copy! (-> (get-chick-with-state 'waiting-to-return) root trans) (get-chicken-initial-return-point))))
       (update-chicken-substate (get-chick-with-state 'waiting-to-return) 'moving-to-portal)))
   (none))
 
@@ -845,7 +894,6 @@
                  (< (vector-vector-distance warpgate-pos (-> chick root trans)) (meters 0.6)))
         ;; Lock the chicken to prevent further saves
         (set! (-> chick locked?) #t)
-        (suspend)
         ;; Play portal effect on the chicken
         (when (-> chick skel effect)
           (effect-control-method-10 (-> chick skel effect) 'death-warp-in -1.0 -1))
@@ -853,8 +901,10 @@
         (update-chicken-substate chick 'uncollected)
         (sound-play "warpgate-tele")
         ;; Perform save logic
+        ;; (format #t (string-format "~S Was SAVED :D ~%" (-> chick name)))
+        ;;     (suspend-for (seconds 0.1))
         (begin
-          (update-saved-chicks (+ (get-saved-chicks) 1))
+          (update-saved-chicks-name-print (+ (get-saved-chicks) 1) (the-as string (-> chick name)))
           (update-saved-chicks-in-mem 1)
           (vector-identity! (-> chick target-pos))
           (vector-identity! (-> chick root trans))
