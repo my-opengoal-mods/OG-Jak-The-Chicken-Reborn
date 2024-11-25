@@ -422,6 +422,7 @@
 
 (defun runs-every-frame-warpgate-hacks ()
   ;; this is in stupid hacks every frame
+
   (when run-mort-code?
     (cond
       ((name= (-> (level-get-target-inside *level*) name) "block-world")
