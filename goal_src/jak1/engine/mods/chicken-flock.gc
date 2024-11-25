@@ -518,15 +518,14 @@
   ;;(format #t "getting unlock level it is ~D~%" (-> *game-info* money-per-level 3))
   (the int (-> *game-info* money-per-level 5)))
 
-  (defun get-dead-chicks-from-mem ()
+(defun get-dead-chicks-from-mem ()
   ;;(format #t "getting unlock level it is ~D~%" (-> *game-info* money-per-level 3))
   (the int (-> *game-info* money-per-level 7)))
 
-  (defun update-dead-chicks-in-mem ()
-   (the int  (+! (-> *game-info* money-per-level 7) 1.0))
-   (format #t "YOU MONSTER ~D~%" (-> *game-info* money-per-level 7))
-   (-> *game-info* money-per-level 7)
-  )
+(defun update-dead-chicks-in-mem ()
+  (the int (+! (-> *game-info* money-per-level 7) 1.0))
+  (format #t "YOU MONSTER ~D~%" (-> *game-info* money-per-level 7))
+  (-> *game-info* money-per-level 7))
 
 (defun get-chick-from-flock ((idx int))
   ;; Chicken indexes are 0-11 (- NUM_FLOCKPOINTS 1)

@@ -229,19 +229,16 @@
     (activate-ice-eco)
     (when (= (-> *stone-surface* slope-slip-angle) ice-slope-slip-angle)
       (deactivate-ice-eco))))
+
 ;;(process-spawn-function process chickens-have-died  14)
 ;; these functions can be combined later they serve the same purpose just need a condition passed for all or following
 (defun reset-chicken-targets ()
   (when done-init?
-
-;; (dotimes (i (get-current-chicks))
-
-
-;; (update-dead-chicks-in-mem)
-;; )
+    (dotimes (i (get-current-chicks))
+      (process-spawn-function process
+        chickens-have-died
+        (get-current-chicks)))
     (dotimes (i NUM_FLOCKPOINTS)
-
-
       (when (= (-> (get-chick-from-flock i) substate) 'following)
         (vector-identity! (-> (get-chick-from-flock i) target-pos))
         (vector-identity! (-> (get-chick-from-flock i) root trans))
@@ -714,15 +711,14 @@ Then at the end of this function it checks some conditions and returns #t or #f 
     (suspend))
   (none))
 
-  (defbehavior chickens-have-died process ((dead-chk int))
-(dotimes (i dead-chk)
-(suspend-for (rand-vu-int-range 0 750))
-(format #t "TRIP")
-(send-event *target* 'loading)
-)
+(defbehavior chickens-have-died process ((dead-chk int))
+  (dotimes (i dead-chk)
+    (update-dead-chicks-in-mem))
+  (auto-save-command 'auto-save 0 0 *default-pool*)
+  (dotimes (i (rand-vu-int-range 1 dead-chk))
+    (suspend-for (rand-vu-int-range 0 750))
+    (play-sound-file "sfx/chicken-die.mp3" (the int (* (-> *setting-control* default sfx-volume) 0.60))))
   (none))
-
-
 
 (defbehavior debug-text-every-frame-proc process ()
   "Process is responsible for drawing debug text this process should never be suspended"
