@@ -80,3 +80,5 @@
 (define *draw-chicken-pool* #f)
 
 (define *show-target-chicken-info* #f)
+
+(defun-extern get-dead-chicks-from-mem int)

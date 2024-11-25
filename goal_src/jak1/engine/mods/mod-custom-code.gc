@@ -220,6 +220,15 @@
   (set! (-> (-> (level-get-target-inside *level*) info) music-bank) #f)
   (set! *custom-music-eco-paused?* #f))
 
+(defbehavior chickens-have-died process ((dead-chk int))
+  (dotimes (i dead-chk)
+    (update-dead-chicks-in-mem))
+  (auto-save-command 'auto-save 0 0 *default-pool*)
+  (dotimes (i (rand-vu-int-range 1 dead-chk))
+    (suspend-for (rand-vu-int-range 0 750))
+    (play-sound-file "sfx/chicken-die.mp3" (the int (* (-> *setting-control* default sfx-volume) 0.60))))
+  (none))
+
 (defun eco-manager ()
   "Main function to manage eco effects."
   ;; Handle eco-chicken
@@ -709,15 +718,6 @@ Then at the end of this function it checks some conditions and returns #t or #f 
   (while #t
     (runs-every-frame-proc-func)
     (suspend))
-  (none))
-
-(defbehavior chickens-have-died process ((dead-chk int))
-  (dotimes (i dead-chk)
-    (update-dead-chicks-in-mem))
-  (auto-save-command 'auto-save 0 0 *default-pool*)
-  (dotimes (i (rand-vu-int-range 1 dead-chk))
-    (suspend-for (rand-vu-int-range 0 750))
-    (play-sound-file "sfx/chicken-die.mp3" (the int (* (-> *setting-control* default sfx-volume) 0.60))))
   (none))
 
 (defbehavior debug-text-every-frame-proc process ()

@@ -524,7 +524,8 @@
 
 (defun update-dead-chicks-in-mem ()
   (the int (+! (-> *game-info* money-per-level 7) 1.0))
-  (when *debug-segment* (format #t "YOU MONSTER ~D~%" (-> *game-info* money-per-level 7)))
+  (when *debug-segment*
+    (format #t "YOU MONSTER ~D~%" (-> *game-info* money-per-level 7)))
   (-> *game-info* money-per-level 7))
 
 (defun get-chick-from-flock ((idx int))
