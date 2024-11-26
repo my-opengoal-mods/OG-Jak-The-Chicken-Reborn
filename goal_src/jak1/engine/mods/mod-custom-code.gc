@@ -270,9 +270,10 @@
 (defun restore-cells ()
   ;;Loop the flock and restore all the Cells
   (dotimes (i (get-current-chicks))
-    (set-or-clear-status! (the entity-actor (entity-by-name (-> (get-chick-from-flock i) parent-cell-name)))
-                          (entity-perm-status dead)
-                          #f))
+    (when (the entity-actor (entity-by-name (-> (get-chick-from-flock i) parent-cell-name)))
+      (set-or-clear-status! (the entity-actor (entity-by-name (-> (get-chick-from-flock i) parent-cell-name)))
+                            (entity-perm-status dead)
+                            #f)))
   (reset-chicken-targets)
   0)
 
