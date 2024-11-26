@@ -78,11 +78,6 @@
     (set! (-> this root scale x) scale)
     (set! (-> this root scale y) scale)
     (set! (-> this root scale z) scale))
-  ;;Shiny chicken
-  (when (= (rand-vu-int-range 0 4096) 4096)
-    (set! (-> this draw color-mult x) (rand-vu-float-range 0.0 70.0))
-    (set! (-> this draw color-mult y) (rand-vu-float-range 0.0 70.0))
-    (set! (-> this draw color-mult z) (rand-vu-float-range 0.0 70.0)))
   (none))
 
 (defmethod common-init! ((this demon-chicken))
@@ -107,7 +102,19 @@
 (defun update-chicken-substate ((chicken demon-chicken) (state symbol))
   (when done-init?
     (case state
-      (('following) (vector-copy! (-> chicken target-pos) (-> *target* root trans)) (set! (-> chicken substate) 'following))
+      (('following)
+       ;;Shiny chicken
+       (if (= (rand-vu-int-range 0 699456) 4096)
+         (begin
+           (set! (-> chicken draw color-mult x) (rand-vu-float-range 0.0 70.0))
+           (set! (-> chicken draw color-mult y) (rand-vu-float-range 0.0 70.0))
+           (set! (-> chicken draw color-mult z) (rand-vu-float-range 0.0 70.0)))
+         (begin
+           (set! (-> chicken draw color-mult x) 1.0)
+           (set! (-> chicken draw color-mult y) 1.0)
+           (set! (-> chicken draw color-mult z) 1.0)))
+       (vector-copy! (-> chicken target-pos) (-> *target* root trans))
+       (set! (-> chicken substate) 'following))
       (('waiting-to-return) (set! (-> chicken substate) 'waiting-to-return))
       (('moving-to-portal) (set! (-> chicken to-point-speed) 10.0) (set! (-> chicken substate) 'moving-to-portal))
       (('uncollected) (set! (-> chicken to-point-speed) 6.0) (set! (-> chicken substate) 'uncollected))
