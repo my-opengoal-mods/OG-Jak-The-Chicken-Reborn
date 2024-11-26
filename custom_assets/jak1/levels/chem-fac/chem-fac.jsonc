@@ -18,7 +18,8 @@
     "flutflutegg-ag",
     "flutflut-ag",
     "eichar-flut+0-ag",
-    "flut-saddle-ag"
+    "flut-saddle-ag",
+    "yakow-ag"
   ],
   "base_id": 5003211246,
   // if your mesh has triangles with incorrect orientation, set this to make all collision mesh triangles double sided
@@ -370,6 +371,18 @@
     //End automatic actors from blender
 
 
+
+    {
+      "trans": [27.91, 302.85, 108.09],
+      "etype": "yakow",
+      "game_task": 117,
+      "quat": [0, 0, 0, 1],
+      "bsphere": [0.0, 0.0, 0.0, 0.0],
+      "lump": {
+        "name": "project-yakow",
+        "alt-actor": "project-yakow"
+      }
+    },
 
     {
       "trans": [31.73, 203.37, 153.08],

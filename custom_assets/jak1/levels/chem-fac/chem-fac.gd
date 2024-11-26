@@ -12,4 +12,5 @@
 "flutflutegg-ag.go"
 
 ;;End of "default" package - level specific stuff should go under here
+"yakow-ag.go"
 ))
