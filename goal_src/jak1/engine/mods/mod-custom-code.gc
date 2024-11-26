@@ -516,11 +516,31 @@
           (set! *old-voice-volume* 0.0)))))
   (none))
 
+(define head-joint (the-as joint-mod #f))
+
+; somewhere, init
+
+(define have-we-ran #f)
+
 (defun chicken-every-frame ()
   (when (run-mort-code?)
     (adjust-chick-origin (find-best-master-mark))
     (adjust-return-origin)
     (assign-remove-demon-chicken-target)
+    (when (process-by-ename "project-yakow")
+      (unless have-we-ran
+        (set! head-joint
+              (new 'process
+                   'joint-mod
+                   (joint-mod-handler-mode joint-set)
+                   (the-as process-drawable (process-by-ename "project-yakow"))
+                   6))
+        (set-vector! (-> head-joint trans) 0.0 (meters -1.5) 0.0 1.0)
+        (set! have-we-ran #t))
+      ; somewhere else, every tick
+      ;;(set-target! head-joint (target-pos 5))
+      ;; (vector-copy! (get-joint-pos-by-name (the-as process-drawable (process-by-ename "project-yakow")) "head") (target-pos 0 ))
+      )
     ;;Constantly check all chicks to see if they are in the warpgate if they are, then run chick-saved and increment saved per level
     ;;THIS FUNCTION HAS A SLEEP/SUSPEND WHEN IT RUNS (have a chick, be near portal)
     (warp-demon-chick)
