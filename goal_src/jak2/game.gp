@@ -302,6 +302,10 @@
 ;; the DGO file
 (custom-level-cgo "TSZ.DGO" "test-zone/testzone.gd")
 
+(build-custom-level "block-world")
+;; the DGO file
+(custom-level-cgo "BWD.DGO" "block-world/block-world.gd")
+
 ;;;;;;;;;;;;;;;;;;;;;
 ;; ANIMATIONS
 ;;;;;;;;;;;;;;;;;;;;;
