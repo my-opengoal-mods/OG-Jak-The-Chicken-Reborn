@@ -851,7 +851,7 @@
                   (meters 1.2)))
       (vector-copy! (-> (get-chick-with-state 'waiting-to-return) target-pos)
                     (-> (the-as process-drawable (process-by-ename "project-training-part-1")) root trans))
-      (if (-> *pc-settings* speedrunner-mode?)
+      (if #t ;;(-> *pc-settings* speedrunner-mode?)
         (vector-copy! (-> (get-chick-with-state 'waiting-to-return) root trans) (get-chicken-initial-return-point)))
       (update-chicken-substate (get-chick-with-state 'waiting-to-return) 'moving-to-portal)))
   (none))
