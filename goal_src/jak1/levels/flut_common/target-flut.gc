@@ -1001,7 +1001,17 @@
       (set! (-> self control unknown-surface00) *flut-air-attack-mods*)
       (sound-play "flop-land" :pitch -0.4)
       ;;Tagmort this is to try to stop the flut GP particles from spawning because they are wrong.
-      (effect-control-method-10 (-> self skel effect) 'group-flut-attack-strike-ground (ja-frame-num 0) 0)
+      (process-spawn part-tracker
+                     :init
+                     part-tracker-init
+                     (-> *part-group-id-table* 121)
+                     -1
+                     #f
+                     #f
+                     #f
+                     (-> self root trans)
+                     :to
+                     *entity-pool*)
       (let ((gp-2 (process-spawn touch-tracker :init touch-tracker-init (-> self control trans) 4096.0 30 :to self)))
         (send-event (ppointer->process gp-2) 'event 'attack 'flut-attack-ground)
         (send-event (ppointer->process gp-2)
@@ -1229,17 +1239,19 @@
               (set! (-> self control unknown-int21) (the-as int (-> self flut flut-trans y)))))
           (set! (-> self control unknown-vector102 quad) (-> gp-0 quad))
           (set! (-> self control unknown-vector103 quad) (-> s5-0 quad))))
-      (let ((gp-1 #f))
-        (sound-play "uppercut")
-        (ja-channel-push! 1 (seconds 0.05))
-        (ja-no-eval :group! eichar-flut-get-on-ja :num! (seek! (ja-aframe (the-as float 24.0) 0)) :frame-num 0.0)
-        (until (ja-done? 0)
-          (when (and (not gp-1) (= (-> self skel root-channel 0) (-> self skel channel)))
-            (send-event (ppointer->process (-> self manipy)) 'anim-mode 'clone-anim)
-            (set! gp-1 #t))
-          (set! (-> self control transv quad) (the-as uint128 0))
-          (suspend)
-          (ja :num! (seek! (ja-aframe (the-as float 24.0) 0)))))
+      ;; (let ((gp-1 #f))
+      ;;   (sound-play "uppercut")
+      ;;   (ja-channel-push! 1 (seconds 0.05))
+      ;;   (ja-no-eval :group! eichar-flut-get-on-ja :num! (seek! (ja-aframe (the-as float 24.0) 0)) :frame-num 0.0)
+      ;;   (until (ja-done? 0)
+      ;;     (when (and (not gp-1) (= (-> self skel root-channel 0) (-> self skel channel)))
+      (send-event (ppointer->process (-> self manipy)) 'anim-mode 'clone-anim)
+      ;;       (set! gp-1 #t))
+      (set! (-> self control transv quad) (the-as uint128 0))
+      ;;     (suspend)
+      ;; (ja :num! (seek! (ja-aframe (the-as float 24.0) 0)))
+      ;; )
+      ;;     )
       (sound-play "flut-coo")
       (logclear! (-> self state-flags) (state-flags use-alt-cam-pos))
       (set! (-> self control transv quad) (the-as uint128 0))
