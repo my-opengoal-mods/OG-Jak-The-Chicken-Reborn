@@ -189,11 +189,24 @@
     (set-frame-rate! *pc-settings* 60 #t))
   (none))
 
+
+(defbehavior wait-for-landed process ()
+  "Process is responsible for dsa most chicken related functions"
+  (until *has-landed?*
+  (suspend)
+  )
+  (update-autosplit-jak1-new-game)
+    (suspend)
+  (none))
+
 (defun start-speedrun ((category speedrun-category))
   (reset-custom-info)
   (reset-mort-struct)
   ;; randomize game id so the autosplitter knows to restart
-  (update-autosplit-jak1-new-game)
+  (false! *has-landed?*)
+
+    (process-spawn-function process
+    wait-for-landed)
   ;; disable hints (turned back on later for all-cutscenes category)
   (set! (-> *setting-control* default play-hints) #f)
   ;; turn on speedrun verification display and flip flag for setting up speedrun after initialize!

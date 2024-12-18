@@ -132,7 +132,7 @@
   (when (and (process-by-ename "robotboss-3") *target*)
     (when (and (= (-> (process-by-ename "robotboss-3") state name) 'robotboss-blue-wait)
                (!= (-> *target* state name) 'target-continue))
-      (set! (-> *autosplit-info-jak1* res-cold-pipe) 1)
+
       (go-process (process-by-ename "robotboss-3") robotboss-white-eco-movie)))
   (none))
 
@@ -663,6 +663,10 @@ Then at the end of this function it checks some conditions and returns #t or #f 
         (if (not done-init?) (init-chickens)))
       (eco-manager) ;;checks constantly if we do or do not have eco, and what type, the gives effect or turns it off
       (none))
+    ;; also always check the eco in speedrunner mode.
+    (when (-> *pc-settings* speedrunner-mode?)
+     (eco-manager)
+    )
     ;; This should be done as the last thing
     (find-best-master-mark)
     (mort-main-menu))
