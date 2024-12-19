@@ -663,10 +663,6 @@ Then at the end of this function it checks some conditions and returns #t or #f 
         (if (not done-init?) (init-chickens)))
       (eco-manager) ;;checks constantly if we do or do not have eco, and what type, the gives effect or turns it off
       (none))
-    ;; also always check the eco in speedrunner mode.
-    (when (-> *pc-settings* speedrunner-mode?)
-     (eco-manager)
-    )
     ;; This should be done as the last thing
     (find-best-master-mark)
     (mort-main-menu))
