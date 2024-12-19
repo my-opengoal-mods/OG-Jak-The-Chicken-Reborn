@@ -342,7 +342,5 @@
   (set! (-> *autosplit-info-jak1* res-cold-pipe) 0))
 
 (defun update-autosplit-jak1-new-game ()
-  (reset-chicken-targets-all)
-  (set! *heard-chem-hint* #f)
   (set! (-> *autosplit-info-jak1* game-hash) (pc-get-unix-timestamp))
   (none))

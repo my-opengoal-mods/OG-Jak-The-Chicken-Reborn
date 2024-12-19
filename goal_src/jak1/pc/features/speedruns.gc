@@ -204,8 +204,9 @@
   (reset-mort-struct)
   ;; randomize game id so the autosplitter knows to restart
   (false! *has-landed?*)
-
-    (process-spawn-function process
+  (reset-chicken-targets-all)
+  (set! *heard-chem-hint* #f)
+  (process-spawn-function process
     wait-for-landed)
   ;; disable hints (turned back on later for all-cutscenes category)
   (set! (-> *setting-control* default play-hints) #f)
