@@ -132,7 +132,7 @@
   (when (and (process-by-ename "robotboss-3") *target*)
     (when (and (= (-> (process-by-ename "robotboss-3") state name) 'robotboss-blue-wait)
                (!= (-> *target* state name) 'target-continue))
-
+      (suspend-for (seconds 0.5))
       (go-process (process-by-ename "robotboss-3") robotboss-white-eco-movie)))
   (none))
 

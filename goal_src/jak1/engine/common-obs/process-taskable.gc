@@ -101,7 +101,8 @@
        (set! (-> this decision) 'yes))
       ((and (cpad-pressed? 0 triangle)
             ;;Tagmort Add cutscenes here to disable cutscene skip on them.
-            (not (or (string= (-> *art-control* active-stream) "sage-intro-sequence-a")
+            (not (or (= (-> *art-control* active-stream) #f)
+                     (string= (-> *art-control* active-stream) "sage-intro-sequence-a")
                      (string= (-> *art-control* active-stream) "sidekick-human-intro-sequence-b")
                      (string= (-> *art-control* active-stream) "sidekick-human-intro-sequence-c")
                      (string= (-> *art-control* active-stream) "finalbosscam-white-eco")

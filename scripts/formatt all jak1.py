@@ -23,9 +23,13 @@ def run_formatter_on_gc_files(root_dir):
 # Specify the root directory to search for .gc files
 root_directory = r"C:\Users\NinjaPC\Documents\Github\OG-Jak-The-Chicken-Reborn\goal_src\jak1"  # Replace with your target directory
 
+root_directory = r"C:\Users\NinjaPC\Documents\Github\OG-Microtransactions\goal_src\jak1"
 #root_directory = r"C:\Users\NinjaPC\Desktop\chickenoct28\OG-Jak-The-Chicken-Reborn-main\goal_src\jak1"  # Replace with your target directory
+
 
 #root_directory = r"C:\Users\NinjaPC\Desktop\chickenoct28\mod-base\OG-Mod-Base-813577b19e4a91babd52f31d53e38bf6466cbb2c\goal_src\jak1"  # Replace with your target directory
 
-root_directory = r"C:\Users\NinjaPC\Documents\Github\teamruns-lazy-randomizer\goal_src\jak1"
+#root_directory = r"C:\Users\NinjaPC\Documents\Github\teamruns-lazy-randomizer\goal_src\jak1"
+root_directory = r"C:\Users\NinjaPC\Documents\Github\fricked3-testing\goal_src\jak2\pc\features"
+root_directory = r"C:\Users\NinjaPC\Documents\Github\banjo\goal_src\jak1"
 run_formatter_on_gc_files(root_directory)

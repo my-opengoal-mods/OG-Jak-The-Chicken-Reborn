@@ -20,11 +20,11 @@ jobs:
         - { name: Windows (clang32),              os: windows-latest, shell: 'msys2 {0}', msystem: clang32, msys-env: mingw-w64-clang-i686 }
         - { name: Windows (clang64),              os: windows-latest, shell: 'msys2 {0}', msystem: clang64, msys-env: mingw-w64-clang-x86_64 }
         - { name: Windows (ucrt64),               os: windows-latest, shell: 'msys2 {0}', msystem: ucrt64,  msys-env: mingw-w64-ucrt-x86_64 }
-        - { name: Ubuntu 20.04 (CMake),           os: ubuntu-20.04,   shell: sh }
-        - { name: Ubuntu 20.04 (autotools),       os: ubuntu-20.04,   shell: sh,    autotools: true }
-        - { name: Intel oneAPI (Ubuntu 20.04),    os: ubuntu-20.04,   shell: bash, artifact: 'SDL-ubuntu20.04-oneapi', intel: true,
+        - { name: Ubuntu 20.04 (CMake),           os: ubuntu-22.04,   shell: sh }
+        - { name: Ubuntu 20.04 (autotools),       os: ubuntu-22.04,   shell: sh,    autotools: true }
+        - { name: Intel oneAPI (Ubuntu 20.04),    os: ubuntu-22.04,   shell: bash, artifact: 'SDL-ubuntu20.04-oneapi', intel: true,
             source_cmd: 'source /opt/intel/oneapi/setvars.sh; export CC=icx; export CXX=icx;'}
-        - { name: Intel Compiler (Ubuntu 20.04),  os: ubuntu-20.04,   shell: bash, artifact: 'SDL-ubuntu20.04-icc', intel: true, cmake: '-DSDL_CLANG_TIDY=OFF',
+        - { name: Intel Compiler (Ubuntu 20.04),  os: ubuntu-22.04,   shell: bash, artifact: 'SDL-ubuntu20.04-icc', intel: true, cmake: '-DSDL_CLANG_TIDY=OFF',
              source_cmd: 'source /opt/intel/oneapi/setvars.sh; export CC=icc; export CXX=icpc; export CFLAGS=-diag-disable=10441; export CXXFLAGS=-diag-disable=10441; '}
 
         - { name: Ubuntu 22.04 (CMake),           os: ubuntu-22.04,   shell: sh }
