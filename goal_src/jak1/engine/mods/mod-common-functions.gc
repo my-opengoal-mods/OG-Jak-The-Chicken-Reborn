@@ -408,6 +408,7 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
   (or (and *has-chicken-eco* (cpad-hold? 0 r2))
       (and *has-chicken-eco* (and (cpad-hold? 0 square) (cpad-hold? 0 circle)))
       (and (is-in-chem-fac-silo) (cpad-hold? 0 r2))
+      (and (is-in-chem-fac-silo) (and (cpad-hold? 0 square) (cpad-hold? 0 circle)))
       (and (= *cheat-mode* 'debug)
            (cpad-hold? (-> *target* control unknown-cpad-info00 number) r2)
            (not *pause-lock*)
